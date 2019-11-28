@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class Application {
+public class OpenTableCloneApplication {
+
 //    @Autowired
 //    private BookRepository bookRepository;
 //    @Autowired
@@ -18,13 +19,12 @@ public class Application {
 //    @Autowired
 //    private HistoryRepository historyRepository;
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
-
-    @Bean
-    CommandLineRunner runner() {
-        return args -> {
+	public static void main(String[] args) {
+		SpringApplication.run(OpenTableCloneApplication.class, args);
+	}
+	@Bean
+	CommandLineRunner runner() {
+		return args -> {
 //            authorRepository.deleteAll();
 //            bookRepository.deleteAll();
 //            creditCardRepository.deleteAll();
@@ -131,6 +131,6 @@ public class Application {
 //            historyRepository.save(h9);
 //            History h10 = new History(c3, b1, new Date(1524654646));
 //            historyRepository.save(h10);
-        };
-    }
+		};
+	}
 }

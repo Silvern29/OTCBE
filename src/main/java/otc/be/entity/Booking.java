@@ -15,8 +15,58 @@ public class Booking {
     @JoinColumn(name = "restaurant")
     private Restaurant restaurant;
     @ManyToOne
-    @JoinColumn(name = "resTable")
-    private ResTable resTable;
+    @JoinColumn(name = "tabl")
+    private Tabl tabl;
 
     private Date date;
+
+    public Booking() {
+    }
+
+    public Booking(User user, Restaurant restaurant, Tabl tabl, Date date) {
+        this.user = user;
+        this.restaurant = restaurant;
+        this.tabl = tabl;
+        this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public Tabl getTabl() {
+        return tabl;
+    }
+
+    public void setTabl(Tabl tabl) {
+        this.tabl = tabl;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }
