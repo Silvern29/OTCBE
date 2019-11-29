@@ -14,16 +14,16 @@ public class Tabl {
     @JoinColumn(name="restaurant")
     private Restaurant restaurant;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tabl")
-    private List<Booking> bookings;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tabl")
+//    private List<Booking> bookings;
 
     public Tabl() {
     }
 
-    public Tabl(int pax, Restaurant restaurant, List<Booking> bookings) {
+    public Tabl(int pax, Restaurant restaurant/*, List<Booking> bookings*/) {
         this.pax = pax;
         this.restaurant = restaurant;
-        this.bookings = bookings;
+//        this.bookings = bookings;
     }
 
     public int getId() {
@@ -50,11 +50,11 @@ public class Tabl {
         this.restaurant = restaurant;
     }
 
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
+//    public List<Booking> getBookings() {
+//        return bookings;
+//    }
+//
+//    public void setBookings(List<Booking> bookings) {
+//        this.bookings = bookings;
+//    }
 }

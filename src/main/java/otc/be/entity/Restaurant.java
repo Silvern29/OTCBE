@@ -13,22 +13,22 @@ public class Restaurant {
     private String address;
     private String info;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-    private List<Tabl> tabls;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-    private List<Booking> bookings;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
+//    private List<Tabl> tabls;
+//
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
+//    private List<Booking> bookings;
 
     public Restaurant() {
     }
 
-    public Restaurant(String name, String kitchen, String address, String info, List<Tabl> tabls, List<Booking> bookings) {
+    public Restaurant(String name, String kitchen, String address, String info/*, List<Tabl> tabls, List<Booking> bookings*/) {
         this.name = name;
         this.kitchen = kitchen;
         this.address = address;
         this.info = info;
-        this.tabls = tabls;
-        this.bookings = bookings;
+//        this.tabls = tabls;
+//        this.bookings = bookings;
     }
 
     public int getId() {
@@ -71,19 +71,19 @@ public class Restaurant {
         this.info = info;
     }
 
-    public List<Tabl> getTabls() {
-        return tabls;
-    }
-
-    public void setTabls(List<Tabl> tabls) {
-        this.tabls = tabls;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
+//    public List<Tabl> getTabls() {
+//        return tabls;
+//    }
+//
+//    public void setTabls(List<Tabl> tabls) {
+//        this.tabls = tabls;
+//    }
+//
+//    public List<Booking> getBookings() {
+//        return bookings;
+//    }
+//
+//    public void setBookings(List<Booking> bookings) {
+//        this.bookings = bookings;
+//    }
 }
