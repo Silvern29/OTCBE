@@ -1,0 +1,10 @@
+** DB connection **
+** Michael M. **
+** 2019-12-02 **
+
+https://w0136ee0.kasserver.com/mysqladmin/PMA4/db_structure.php?server=1&db=d0306ed6
+
+user/db: d0306ed6
+pw: FqHrFZ6XhgDSKduo
+host: w0136ee0.kasserver.com/
+
