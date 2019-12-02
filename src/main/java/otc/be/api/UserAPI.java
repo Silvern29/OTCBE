@@ -13,6 +13,7 @@ import otc.be.repository.UserRepository;
 import java.util.LinkedList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path="api")
 public class UserAPI {

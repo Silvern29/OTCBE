@@ -15,13 +15,15 @@ public class RestaurantTable {
     private int pax;
 
     //ein Tisch ist genau einem Restaurant zugeordnet
-    @ManyToOne
-    @JoinColumn(name = "id_restaurant", insertable = false, updatable = false, nullable = false)
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_restaurant")
+    @JsonBackReference
+    //, insertable = false, updatable = false, nullable = false) auskommentiert, wenn es drin ist, geht das Anlegen der Tische mit der Restaurant-ID nicht
     private Restaurant restaurant;
 
     //ein Tisch kann in mehrere Bookings involviert sein
     @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurantTable", targetEntity = Booking.class)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurantTable", targetEntity = Booking.class)
     private List<Booking> bookings;
 
     //leerer Konstruktor

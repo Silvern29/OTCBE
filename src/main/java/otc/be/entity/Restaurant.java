@@ -20,11 +20,12 @@ public class Restaurant {
 
     //ein Restaurant hat  viele Tische  --> List
     @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = RestaurantTable.class)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = RestaurantTable.class)
     private List<RestaurantTable> restaurantTables;
 
     //ein Restaurant kann in mehrere Bookings involviert sein --> List
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = Booking.class)
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = Booking.class)
     private List<Booking> bookings;
 
     //leerer Konstruktor (erforderlich)

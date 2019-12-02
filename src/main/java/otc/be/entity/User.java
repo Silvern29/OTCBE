@@ -16,7 +16,7 @@ public class User {
     private String email;
     private String password;
     @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", targetEntity = Booking.class) //ein User kann in viele Booking-Einträge involviert sein --> List
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = Booking.class) //ein User kann in viele Booking-Einträge involviert sein --> List
     private List<Booking> bookings;
 
     //leerer Konstruktor erforderlich

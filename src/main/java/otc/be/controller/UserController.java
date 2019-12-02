@@ -11,7 +11,7 @@ public class UserController {
     UserRepository userRepository;
 
     public Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findByOrderByIdAsc();
     }
 
     public void create(User user) {
@@ -20,10 +20,8 @@ public class UserController {
     }
 
     public User update(User user) {
-        User updatedUser = user; //derweil zur Sicherstellung der Grund-Funktionalität
+        User updatedUser = userRepository.findById((user.getId())).get(); //derweil zur Sicherstellung der Grund-Funktionalität
         //aus dem book herauskopiert - kann in alle himmelsrichtungen hin geändert werden
-//        Restaurant updatedRestaurant = restaurantRepository.findById(restaurant.getId().get());
-//        if (!book.getTitle().equals("")) updatedBook.setTitle(book.getTitle());
 //        if (book.getIdAuthor() > 0) updatedBook.setIdAuthor(book.getIdAuthor());
 //        if (book.getIdCategory() > 0) updatedBook.setIdCategory((book.getIdCategory()));
 //        if (book.getIsbn() > 0) updatedBook.setIsbn(book.getIsbn());
@@ -45,5 +43,4 @@ public class UserController {
         System.out.println("Nun sollte der User mit der ID " + id + " gelöscht worden sein.");
         userRepository.deleteById(id);
     }
-
 }

@@ -13,21 +13,21 @@ public class Booking {
 
     //eine Buchung ist genau einem Kunden zugeordnet
     @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "id_user", insertable = false, updatable = false, nullable = false)
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_user")        //, insertable = false, updatable = false, nullable = false)
     private User user;
 
     // würde ich weglassen, da jeder Tabl bereits einem Restaurant zugeordnet ist
     // eine Buchung ist genau einem Restaurant zugeordnet
     @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "id_restaurant", insertable = false, updatable = false, nullable = false)
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_restaurant")   //, insertable = false, updatable = false, nullable = false)
     private Restaurant restaurant;
 
     //eine Buchung ist genau einem Tisch zugeordnet
     @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "id_restaurant_table",  insertable = false, updatable = false, nullable = false)
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_restaurant_table")   //,  insertable = false, updatable = false, nullable = false)
     private RestaurantTable restaurantTable;
 
     private Date date;

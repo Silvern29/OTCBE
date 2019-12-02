@@ -1,35 +1,34 @@
 package otc.be.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import otc.be.entity.Restaurant;
-import otc.be.repository.RestaurantRepository;
+import otc.be.entity.RestaurantTable;
+import otc.be.repository.RestaurantTableRepository;
 
 import java.util.Optional;
 
 @Controller
-public class RestaurantController {
-
+public class RestaurantTableController {
     @Autowired
-    RestaurantRepository restaurantRepository;
+    RestaurantTableRepository restaurantTableRepository;
 
-    public Iterable<Restaurant> getAllRestaurants() {
-        return restaurantRepository.findByOrderByIdAsc();
+
+    public Iterable<RestaurantTable> getAllRestaurantTables() {
+        return restaurantTableRepository.findByOrderByIdAsc();
     }
 
-    public Optional<Restaurant> getRestaurantById(Integer id) {
-        return restaurantRepository.findById(id);
+    public Optional<RestaurantTable> getRestaurantTableById(Integer id) {
+        return restaurantTableRepository.findById(id);
     }
 
-    public void create(Restaurant restaurant) {
-        restaurantRepository.save(restaurant);
-        System.out.println("Jetzt sollte ein neues Restaurant in der Tabelle Restaurant eingetragen worden sein.");
+    public void create(RestaurantTable restaurantTable) {
+        restaurantTableRepository.save(restaurantTable);
+        System.out.println("Jetzt sollte ein neuer Tisch in der Tabelle RestaurantTable eingetragen worden sein.");
     }
 
-    public Restaurant update(Restaurant restaurant) {
-        Restaurant updatedRestaurant = restaurantRepository.findById(restaurant.getId()).get();
+    public RestaurantTable update(RestaurantTable restaurantTable) {
+        RestaurantTable updatedRestaurantTable = restaurantTableRepository.findById(restaurantTable.getId()).get();; //derweil zur Sicherstellung der Grund-Funktionalität
 //        if (!book.getTitle().equals("")) updatedBook.setTitle(book.getTitle());
 //        if (book.getIdAuthor() > 0) updatedBook.setIdAuthor(book.getIdAuthor());
 //        if (book.getIdCategory() > 0) updatedBook.setIdCategory((book.getIdCategory()));
@@ -44,12 +43,13 @@ public class RestaurantController {
 //        if (book.getIdColumn() > 0) updatedBook.setIdColumn(book.getIdColumn());
 //        System.out.println("Nun sollte das Buch mit der ID " + book.getIdBook() + " geändert worden sein.");
 //        //bookRepository.updateBook(book.getIdBook(), updatedBook.getTitle(), updatedBook.getIdAuthor(), updatedBook.getIdCategory(), updatedBook.getIsbn(), updatedBook.getFsk(), updatedBook.getPublisher(), updatedBook.getEdition(), updatedBook.getFirstEdition(), updatedBook.getAmountPages(), updatedBook.getLanguage(), updatedBook.getIdRow(), updatedBook.getIdColumn());
-       restaurantRepository.save(updatedRestaurant);
-        return updatedRestaurant;
+        restaurantTableRepository.save(updatedRestaurantTable);
+        return updatedRestaurantTable;
     }
 
     public void deleteById(Integer id) {
-        System.out.println("Nun sollte das Restaurant mit der ID " + id + " gelöscht worden sein.");
-        restaurantRepository.deleteById(id);
+        System.out.println("Nun sollte der Tisch mit der ID " + id + " gelöscht worden sein.");
+        restaurantTableRepository.deleteById(id);
     }
+
 }

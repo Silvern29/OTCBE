@@ -18,4 +18,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     Optional<User> findByEmail(@Param("email") String email);
 
+    Iterable<User> findByOrderByIdAsc();
+
     }
