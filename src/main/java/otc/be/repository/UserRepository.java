@@ -13,8 +13,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     Optional<User> findById(int id);
 
-    @Query(value = "SELECT * FROM customer where last_name LIKE %:lastName%", nativeQuery = true)
-    Iterable<User> findCustomerByLastName(@Param("lastName") String lastName);
+    @Query(value = "SELECT * FROM user where last_name LIKE %:lastName%", nativeQuery = true)
+    Iterable<User> findUserByLastName(@Param("lastName") String lastName);
 
     Optional<User> findByEmail(@Param("email") String email);
 

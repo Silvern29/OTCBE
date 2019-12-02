@@ -1,5 +1,7 @@
 package otc.be.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -13,18 +15,28 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    private List<Booking> bookings;
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", targetEntity = Booking.class) //ein User kann in viele Booking-Einträge involviert sein --> List
+    private List<Booking> bookings;
 
+    //leerer Konstruktor erforderlich
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String password/*, List<Booking> bookings*/) {
+    //Konstruktor für OpenTableCloneApplication erforderlich
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-//        this.bookings = bookings;
+    }
+
+    public User(String firstName, String lastName, String email, String password, List<Booking> bookings) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.bookings = bookings;
     }
 
     public int getId() {
@@ -67,11 +79,11 @@ public class User {
         this.password = password;
     }
 
-//    public List<Booking> getBookings() {
-//        return bookings;
-//    }
-//
-//    public void setBookings(List<Booking> bookings) {
-//        this.bookings = bookings;
-//    }
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 }

@@ -1,30 +1,122 @@
 package otc.be;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import otc.be.entity.Restaurant;
+import otc.be.entity.RestaurantTable;
+import otc.be.entity.User;
+import otc.be.repository.BookingRepository;
+import otc.be.repository.RestaurantRepository;
+import otc.be.repository.RestaurantTableRepository;
+import otc.be.repository.UserRepository;
+
 
 @SpringBootApplication
 public class OpenTableCloneApplication {
 
-//    @Autowired
-//    private BookRepository bookRepository;
-//    @Autowired
-//    private AuthorRepository authorRepository;
-//    @Autowired
-//    private CustomerRepository customerRepository;
-//    @Autowired
-//    private CreditCardRepository creditCardRepository;
-//    @Autowired
-//    private HistoryRepository historyRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    RestaurantRepository restaurantRepository;
+    @Autowired
+    RestaurantTableRepository restaurantTableRepository;
+    @Autowired
+    BookingRepository bookingRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(OpenTableCloneApplication.class, args);
-	}
-	@Bean
-	CommandLineRunner runner() {
-		return args -> {
+    public static void main(String[] args) {
+        SpringApplication.run(OpenTableCloneApplication.class, args);
+    }
+
+    @Bean
+    CommandLineRunner runner() {
+        return args -> {
+            //userRepository.deleteAll();
+            User u1 = new User("Anton", "Ameise", "anton.ameise@aol.at", "abcdef");
+            User u2 = new User("Bernd", "Bande", "bernd.bande@gmx.at", "aaaaaa");
+            User u3 = new User("Clara", "Chor", "clara.chor@drei.at", "1111");
+            userRepository.save(u1);
+            userRepository.save(u2);
+            userRepository.save(u3);
+
+            //restaurantRepository.deleteAll();
+            Restaurant r1 = new Restaurant("Gasthaus Rössle", "gutbürgerlich", "Rautenastraße", "28", "6832", "Röthis", "teuer, wegen Reichtum öfter geschlossen, feiertags geschlossen");
+            Restaurant r2 = new Restaurant("Babbo Bar", "italienisch", "Donaustraße", "103", "12043", "Berlin", "authentisch, für Rendezvous geeignet, beachtliche Weinkarte");
+            Restaurant r3 = new Restaurant("Chotto Motto", "kreative Küche", "Frith Street", "11-13", "W1D 4RB", "London", "für Rendezvous geeignet, besondere Anlässe");
+            restaurantRepository.save(r1);
+            restaurantRepository.save(r2);
+            restaurantRepository.save(r3);
+
+//            restaurantTableRepository.deleteAll();
+            Restaurant or = restaurantRepository.findById(1).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
+            System.out.println(or.getId() + " " + or.getName());
+//            RestaurantTable t1 = new RestaurantTable(1, 4, or);
+//            RestaurantTable t2 = new RestaurantTable(2, 4, or);
+//            RestaurantTable t3 = new RestaurantTable(3, 4, or);
+//            RestaurantTable t4 = new RestaurantTable(4, 4, or);
+//            RestaurantTable t5 = new RestaurantTable(5, 2, or);
+//            RestaurantTable t6 = new RestaurantTable(6, 2, or);
+//            RestaurantTable t7 = new RestaurantTable(7, 6, or);
+//            RestaurantTable t8 = new RestaurantTable(8, 6, or);
+//            RestaurantTable t9 = new RestaurantTable(9, 8, or);
+//            RestaurantTable t10 = new RestaurantTable(10, 8, or);
+//            restaurantTableRepository.save(t1);
+//            restaurantTableRepository.save(t2);
+//            restaurantTableRepository.save(t3);
+//            restaurantTableRepository.save(t4);
+//            restaurantTableRepository.save(t5);
+//            restaurantTableRepository.save(t6);
+//            restaurantTableRepository.save(t7);
+//            restaurantTableRepository.save(t8);
+//            restaurantTableRepository.save(t9);
+//            restaurantTableRepository.save(t10);
+//            or = restaurantRepository.findById(2).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
+//            t1 = new RestaurantTable(1, 8, or);
+//            t2 = new RestaurantTable(2, 8, or);
+//            t3 = new RestaurantTable(3, 6, or);
+//            t4 = new RestaurantTable(4, 6, or);
+//            t5 = new RestaurantTable(5, 4, or);
+//            t6 = new RestaurantTable(6, 4, or);
+//            t7 = new RestaurantTable(7, 4, or);
+//            t8 = new RestaurantTable(8, 4, or);
+//            t9 = new RestaurantTable(9, 4, or);
+//            t10 = new RestaurantTable(10, 4, or);
+//            restaurantTableRepository.save(t1);
+//            restaurantTableRepository.save(t2);
+//            restaurantTableRepository.save(t3);
+//            restaurantTableRepository.save(t4);
+//            restaurantTableRepository.save(t5);
+//            restaurantTableRepository.save(t6);
+//            restaurantTableRepository.save(t7);
+//            restaurantTableRepository.save(t8);
+//            restaurantTableRepository.save(t9);
+//            restaurantTableRepository.save(t10);
+//			or = restaurantRepository.findById(3).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
+//			t1 = new RestaurantTable(1, 5, or);
+//			t2 = new RestaurantTable(2, 5, or);
+//			t3 = new RestaurantTable(3, 4, or);
+//			t4 = new RestaurantTable(4, 4, or);
+//			t5 = new RestaurantTable(5, 3, or);
+//			t6 = new RestaurantTable(6, 3, or);
+//			t7 = new RestaurantTable(7, 2, or);
+//			t8 = new RestaurantTable(8, 2, or);
+//			t9 = new RestaurantTable(9, 2, or);
+//			t10 = new RestaurantTable(10, 2, or);
+//			restaurantTableRepository.save(t1);
+//			restaurantTableRepository.save(t2);
+//			restaurantTableRepository.save(t3);
+//			restaurantTableRepository.save(t4);
+//			restaurantTableRepository.save(t5);
+//			restaurantTableRepository.save(t6);
+//			restaurantTableRepository.save(t7);
+//			restaurantTableRepository.save(t8);
+//			restaurantTableRepository.save(t9);
+//			restaurantTableRepository.save(t10);
+
+
+
 //            authorRepository.deleteAll();
 //            bookRepository.deleteAll();
 //            creditCardRepository.deleteAll();
@@ -131,6 +223,6 @@ public class OpenTableCloneApplication {
 //            historyRepository.save(h9);
 //            History h10 = new History(c3, b1, new Date(1524654646));
 //            historyRepository.save(h10);
-		};
-	}
+        };
+    }
 }

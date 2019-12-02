@@ -1,5 +1,7 @@
 package otc.be.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,25 +12,47 @@ public class Restaurant {
     private int id;
     private String name;
     private String kitchen;
-    private String address;
+    private String street;
+    private String apNr;
+    private String zip;
+    private String city;
     private String info;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-//    private List<Tabl> tabls;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
-//    private List<Booking> bookings;
+    //ein Restaurant hat  viele Tische  --> List
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = RestaurantTable.class)
+    private List<RestaurantTable> restaurantTables;
 
+    //ein Restaurant kann in mehrere Bookings involviert sein --> List
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = Booking.class)
+    private List<Booking> bookings;
+
+    //leerer Konstruktor (erforderlich)
     public Restaurant() {
     }
 
-    public Restaurant(String name, String kitchen, String address, String info/*, List<Tabl> tabls, List<Booking> bookings*/) {
+    //Konstruktor für OpenTableCloneApplication erforderlich
+    public Restaurant(String name, String kitchen, String street, String apNr, String zip, String city, String info) {
         this.name = name;
         this.kitchen = kitchen;
-        this.address = address;
+        this.street = street;
+        this.apNr = apNr;
+        this.zip = zip;
+        this.city = city;
         this.info = info;
-//        this.tabls = tabls;
-//        this.bookings = bookings;
+    }
+
+    public Restaurant(int id, String name, String kitchen, String street, String apNr, String zip, String city, String info, List<RestaurantTable> restaurantTables, List<Booking> bookings) {
+        this.id = id;
+        this.name = name;
+        this.kitchen = kitchen;
+        this.street = street;
+        this.apNr = apNr;
+        this.zip = zip;
+        this.city = city;
+        this.info = info;
+        this.restaurantTables = restaurantTables;
+        this.bookings = bookings;
     }
 
     public int getId() {
@@ -55,12 +79,36 @@ public class Restaurant {
         this.kitchen = kitchen;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getApNr() {
+        return apNr;
+    }
+
+    public void setApNr(String apNr) {
+        this.apNr = apNr;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getInfo() {
@@ -71,19 +119,19 @@ public class Restaurant {
         this.info = info;
     }
 
-//    public List<Tabl> getTabls() {
-//        return tabls;
-//    }
-//
-//    public void setTabls(List<Tabl> tabls) {
-//        this.tabls = tabls;
-//    }
-//
-//    public List<Booking> getBookings() {
-//        return bookings;
-//    }
-//
-//    public void setBookings(List<Booking> bookings) {
-//        this.bookings = bookings;
-//    }
+    public List<RestaurantTable> getRestaurantTables() {
+        return restaurantTables;
+    }
+
+    public void setRestaurantTables(List<RestaurantTable> restaurantTables) {
+        this.restaurantTables = restaurantTables;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 }
