@@ -119,19 +119,6 @@ public class OpenTableCloneApplication {
 //			restaurantTableRepository.save(t9);
 //			restaurantTableRepository.save(t10);
 
-//            User bu1 = userRepository.findById(1).get(); //bu - für booking-Vorgang und u herausgelesenen User (mit ID)
-////            User bu2 = userRepository.findById(2).get();
-////            User bu3 = userRepository.findById(3).get();
-//
-//            RestaurantTable brt1 = restaurantTableRepository.findById(1).get(); //brt für booking-Vorgang und rt herausgelesener RestaurantTable mit ID
-//            Restaurant br1 = brt1.getRestaurant(); // aus dem herausgelesenen RestaurantTable - das Restaurant
-//
-//            Booking b1 = new Booking(bu1, br1, brt1, Date.valueOf("2019-12-02"));
-//            bookingRepository.save(b1);
-
-
-
-
 
 
 //            authorRepository.deleteAll();
