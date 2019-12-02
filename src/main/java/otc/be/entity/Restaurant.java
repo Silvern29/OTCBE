@@ -19,7 +19,6 @@ public class Restaurant {
     private String info;
 
     //ein Restaurant hat  viele Tische  --> List
-    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = RestaurantTable.class)
     private List<RestaurantTable> restaurantTables;
 

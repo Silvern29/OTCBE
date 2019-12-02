@@ -10,6 +10,7 @@ import otc.be.entity.Restaurant;
 
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path="api")
 public class RestaurantAPI {
@@ -23,10 +24,10 @@ private RestaurantController restaurantController;
         return listAll;
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Restaurant create(@RequestBody Restaurant restaurant) {
+    @RequestMapping(method = RequestMethod.POST, path = "/restaurants")
+    public void /*Restaurant*/ create(@RequestBody Restaurant restaurant) {
         restaurantController.create(restaurant);
-        return restaurant;
+        //return restaurant;
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/restaurants")

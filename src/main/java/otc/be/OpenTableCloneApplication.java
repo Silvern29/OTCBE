@@ -34,20 +34,20 @@ public class OpenTableCloneApplication {
     CommandLineRunner runner() {
         return args -> {
             //userRepository.deleteAll();
-            User u1 = new User("Anton", "Ameise", "anton.ameise@aol.at", "abcdef");
-            User u2 = new User("Bernd", "Bande", "bernd.bande@gmx.at", "aaaaaa");
-            User u3 = new User("Clara", "Chor", "clara.chor@drei.at", "1111");
-            userRepository.save(u1);
-            userRepository.save(u2);
-            userRepository.save(u3);
+//            User u1 = new User("Anton", "Ameise", "anton.ameise@aol.at", "abcdef");
+//            User u2 = new User("Bernd", "Bande", "bernd.bande@gmx.at", "aaaaaa");
+//            User u3 = new User("Clara", "Chor", "clara.chor@drei.at", "1111");
+//            userRepository.save(u1);
+//            userRepository.save(u2);
+//            userRepository.save(u3);
 
             //restaurantRepository.deleteAll();
-            Restaurant r1 = new Restaurant("Gasthaus Rössle", "gutbürgerlich", "Rautenastraße", "28", "6832", "Röthis", "teuer, wegen Reichtum öfter geschlossen, feiertags geschlossen");
-            Restaurant r2 = new Restaurant("Babbo Bar", "italienisch", "Donaustraße", "103", "12043", "Berlin", "authentisch, für Rendezvous geeignet, beachtliche Weinkarte");
-            Restaurant r3 = new Restaurant("Chotto Motto", "kreative Küche", "Frith Street", "11-13", "W1D 4RB", "London", "für Rendezvous geeignet, besondere Anlässe");
-            restaurantRepository.save(r1);
-            restaurantRepository.save(r2);
-            restaurantRepository.save(r3);
+//            Restaurant r1 = new Restaurant("Gasthaus Rössle", "gutbürgerlich", "Rautenastraße", "28", "6832", "Röthis", "teuer, wegen Reichtum öfter geschlossen, feiertags geschlossen");
+//            Restaurant r2 = new Restaurant("Babbo Bar", "italienisch", "Donaustraße", "103", "12043", "Berlin", "authentisch, für Rendezvous geeignet, beachtliche Weinkarte");
+//            Restaurant r3 = new Restaurant("Chotto Motto", "kreative Küche", "Frith Street", "11-13", "W1D 4RB", "London", "für Rendezvous geeignet, besondere Anlässe");
+//            restaurantRepository.save(r1);
+//            restaurantRepository.save(r2);
+//            restaurantRepository.save(r3);
 
 //            restaurantTableRepository.deleteAll();
             Restaurant or = restaurantRepository.findById(1).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
