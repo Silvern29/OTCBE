@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import otc.be.entity.User;
 import otc.be.repository.UserRepository;
 
+import java.util.Optional;
+
 @Controller
 public class UserController {
     @Autowired
@@ -13,6 +15,9 @@ public class UserController {
     public Iterable<User> getAllUsers() {
         return userRepository.findByOrderByIdAsc();
     }
+    public Optional<User> getUserById(Integer id) {
+        return userRepository.findById(id);
+    }
 
     public void create(User user) {
         userRepository.save(user);
@@ -20,22 +25,13 @@ public class UserController {
     }
 
     public User update(User user) {
-        User updatedUser = userRepository.findById((user.getId())).get(); //derweil zur Sicherstellung der Grund-Funktionalität
-        //aus dem book herauskopiert - kann in alle himmelsrichtungen hin geändert werden
-//        if (book.getIdAuthor() > 0) updatedBook.setIdAuthor(book.getIdAuthor());
-//        if (book.getIdCategory() > 0) updatedBook.setIdCategory((book.getIdCategory()));
-//        if (book.getIsbn() > 0) updatedBook.setIsbn(book.getIsbn());
-//        if (book.getFsk() > 0) updatedBook.setFsk(book.getFsk());
-//        if (!book.getPublisher().equals("")) updatedBook.setPublisher(book.getPublisher());
-//        if (!book.getEdition().equals("")) updatedBook.setEdition(book.getEdition());
-//        if (!book.getFirstEdition().equals("")) updatedBook.setFirstEdition(book.getFirstEdition());
-//        if (book.getAmountPages() > 0) updatedBook.setAmountPages(book.getAmountPages());
-//        if (!book.getLanguage().equals("")) updatedBook.setLanguage(book.getLanguage());
-//        if (book.getIdRow() > 0) updatedBook.setIdRow(book.getIdRow());
-//        if (book.getIdColumn() > 0) updatedBook.setIdColumn(book.getIdColumn());
-//        System.out.println("Nun sollte das Buch mit der ID " + book.getIdBook() + " geändert worden sein.");
-//        //bookRepository.updateBook(book.getIdBook(), updatedBook.getTitle(), updatedBook.getIdAuthor(), updatedBook.getIdCategory(), updatedBook.getIsbn(), updatedBook.getFsk(), updatedBook.getPublisher(), updatedBook.getEdition(), updatedBook.getFirstEdition(), updatedBook.getAmountPages(), updatedBook.getLanguage(), updatedBook.getIdRow(), updatedBook.getIdColumn());
+        User updatedUser = userRepository.findById((user.getId())).get();
+        if (!user.getFirstName().equals("")) updatedUser.setFirstName(user.getFirstName());
+        if (!user.getLastName().equals("")) updatedUser.setLastName(user.getLastName());
+        if (!user.getEmail().equals("")) updatedUser.setEmail(user.getEmail());
+        if (!user.getPassword().equals("")) updatedUser.setPassword(user.getPassword());
         userRepository.save(updatedUser);
+        System.out.println("Die Userdaten sollten auf "+ updatedUser.getId()+ " " + updatedUser.getFirstName() + " " + updatedUser.getLastName()+ " " + updatedUser.getEmail() + " " + updatedUser.getPassword() + " geändert worden sein.");
         return updatedUser;
     }
 

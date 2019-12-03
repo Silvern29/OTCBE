@@ -24,6 +24,12 @@ public class RestaurantTableAPI {
         return listAll;
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/tables/{id}")
+    public Optional<RestaurantTable> getRestaurantTableById(@PathVariable("id") Integer id) {
+        Optional<RestaurantTable> restaurant = restaurantTableController.getRestaurantTableById(id);
+        return restaurant;
+    }
+
     @RequestMapping(method = RequestMethod.POST, path = "/tables", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public RestaurantTable create(@RequestBody RestaurantTable restaurantTable) {
         restaurantTableController.create(restaurantTable);
@@ -40,11 +46,5 @@ public class RestaurantTableAPI {
     public ResponseEntity<RestaurantTable> deletebyId(@PathVariable("id") Integer id) {
         restaurantTableController.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, path = "/tables/{id}")
-    public Optional<RestaurantTable> getRestaurantById(@PathVariable("id") Integer id) {
-        Optional<RestaurantTable> restaurant = restaurantTableController.getRestaurantTableById(id);
-        return restaurant;
     }
 }

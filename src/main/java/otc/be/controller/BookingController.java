@@ -3,8 +3,13 @@ package otc.be.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import otc.be.entity.Booking;
+import otc.be.entity.Restaurant;
+import otc.be.entity.RestaurantTable;
 import otc.be.repository.BookingRepository;
+import otc.be.repository.RestaurantRepository;
+import otc.be.repository.RestaurantTableRepository;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @Controller
@@ -12,6 +17,11 @@ public class BookingController {
 
     @Autowired
     private BookingRepository bookingRepository;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+    @Autowired
+    private RestaurantTableRepository restaurantTableRepository;
+
 
     public Iterable<Booking> getAllBookings() {
         return bookingRepository.findByOrderByIdAsc();
@@ -22,27 +32,46 @@ public class BookingController {
     }
 
     public void create(Booking booking) {
+        //Kontrolle, dass das mitgegebene Restaurant auch tatsächlich dem gebuchten Tisch entspricht
+        Optional<RestaurantTable> tempRT = restaurantTableRepository.findById(booking.getRestaurantTable().getId());
+        if (tempRT.isPresent()) {
+            //lies daraus das eingetragene Restaurant aus
+            Restaurant tempR = tempRT.get().getRestaurant();
+            //schreibe das zur eingegebenen TischID zugehörige Restaurant im nächsten Schritt in die DB
+            booking.setRestaurant(tempR);
+        }
         bookingRepository.save(booking);
         System.out.println("Jetzt sollte eine neue Buchung in der Tabelle Booking eingetragen worden sein.");
     }
 
     public Booking update(Booking booking) {
         Booking updatedBooking = bookingRepository.findById(booking.getId()).get();
-//        if (!book.getTitle().equals("")) updatedBook.setTitle(book.getTitle());
-//        if (book.getIdAuthor() > 0) updatedBook.setIdAuthor(book.getIdAuthor());
-//        if (book.getIdCategory() > 0) updatedBook.setIdCategory((book.getIdCategory()));
-//        if (book.getIsbn() > 0) updatedBook.setIsbn(book.getIsbn());
-//        if (book.getFsk() > 0) updatedBook.setFsk(book.getFsk());
-//        if (!book.getPublisher().equals("")) updatedBook.setPublisher(book.getPublisher());
-//        if (!book.getEdition().equals("")) updatedBook.setEdition(book.getEdition());
-//        if (!book.getFirstEdition().equals("")) updatedBook.setFirstEdition(book.getFirstEdition());
-//        if (book.getAmountPages() > 0) updatedBook.setAmountPages(book.getAmountPages());
-//        if (!book.getLanguage().equals("")) updatedBook.setLanguage(book.getLanguage());
-//        if (book.getIdRow() > 0) updatedBook.setIdRow(book.getIdRow());
-//        if (book.getIdColumn() > 0) updatedBook.setIdColumn(book.getIdColumn());
-//        System.out.println("Nun sollte das Buch mit der ID " + book.getIdBook() + " geändert worden sein.");
-//        //bookRepository.updateBook(book.getIdBook(), updatedBook.getTitle(), updatedBook.getIdAuthor(), updatedBook.getIdCategory(), updatedBook.getIsbn(), updatedBook.getFsk(), updatedBook.getPublisher(), updatedBook.getEdition(), updatedBook.getFirstEdition(), updatedBook.getAmountPages(), updatedBook.getLanguage(), updatedBook.getIdRow(), updatedBook.getIdColumn());
+
+        //ist ein Datum eingegeben? -> weicht das in der DB hinterlegte Buchungsdatum vom eingegebenen Buchungsdatum ab, dann schreibe das eingegebene Datum im nächsten Schritt in die DB
+        if ((booking.getDate() != null) && (booking.getDate() != updatedBooking.getDate()))
+            updatedBooking.setDate(booking.getDate());
+        //ist eine Uhrzeit eingegeben? -> weicht die in der DB hinterlegte Uhrzeit von der eingegebenen Uhrzeit ab, dann schreibe die eingegebene Uhrzeit im nächsten Schritt in die DB
+        if ((booking.getTime() != null) && (booking.getTime() != updatedBooking.getTime()))
+            updatedBooking.setTime(booking.getTime());
+        //ist ein User eingegeben? -> weicht der in der DB hinterlegte User vom eingegebenen User ab, dann schreibe den eingegebenen User im nächsten Schritt in die DB
+        if ((booking.getUser().getId() != 0) && (booking.getUser().getId() != updatedBooking.getUser().getId()))
+            updatedBooking.setUser(booking.getUser());
+        //ist ein Tisch eingegeben? -> weicht der in der DB hinterlegte Tisch vom eingegebenen Tisch ab, dann schreibe den eingegebenen Tisch im nächsten Schritt in die DB
+        if ((booking.getRestaurantTable().getId() != 0) && (updatedBooking.getRestaurantTable().getId() != booking.getRestaurantTable().getId())) {
+            updatedBooking.setRestaurantTable(booking.getRestaurantTable());
+            //lies aus der DB den Eintrag für den eingegebenen, mit der ID erwähnten Tisch aus
+            Optional<RestaurantTable> tempRT = restaurantTableRepository.findById(booking.getRestaurantTable().getId());
+            if (tempRT.isPresent()) {
+                //lies daraus das eingetragene Restaurant aus
+                Restaurant tempR = tempRT.get().getRestaurant();
+                //schreibe das zur eingegebenen TischID zugehörige Restaurant im nächsten Schritt in die DB
+                updatedBooking.setRestaurant(tempR);
+            }
+        }
+        //ist ein Restaurant eingegeben - würde ich weglassen, da beim Eintrag des Restaurants ohnehin geschaut wird, dass das laut Tisch-ID hinterlegte Restaurant in der DB gespeichert wird. Umsetzung bei Create fehlt noch!!!
+        //Schreiben in die DB
         bookingRepository.save(updatedBooking);
+        System.out.println("Die Änderung der Buchung sollte erfasst sein.");
         return updatedBooking;
     }
 

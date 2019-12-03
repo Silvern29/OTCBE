@@ -12,10 +12,11 @@ import otc.be.repository.UserRepository;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(path="api")
+@RequestMapping(path = "api")
 public class UserAPI {
 
     @Autowired
@@ -35,12 +36,18 @@ public class UserAPI {
 //        }
 //        return users;
 //    }
-@RequestMapping(method = RequestMethod.GET, path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-public Iterable<User> getListAll() {
-    Iterable<User> listAll = userController.getAllUsers();
-    return listAll;
-}
 
+    @RequestMapping(method = RequestMethod.GET, path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<User> getListAll() {
+        Iterable<User> listAll = userController.getAllUsers();
+        return listAll;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/users/{id}")
+    public Optional<User> getUserById(@PathVariable("id") Integer id) {
+        Optional<User> user = userController.getUserById(id);
+        return user;
+    }
 
     @RequestMapping(method = RequestMethod.POST, path = "/users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public User create(@RequestBody User user) {
@@ -59,7 +66,4 @@ public Iterable<User> getListAll() {
         userController.update(user);
         return user;
     }
-
-
-
 }

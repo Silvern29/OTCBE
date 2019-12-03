@@ -25,6 +25,12 @@ public class BookingAPI {
         return listAll;
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/bookings/{id}")
+    public Optional<Booking> getBookingById(@PathVariable("id") Integer id) {
+        Optional<Booking> booking = bookingController.getBookingById(id);
+        return booking;
+    }
+
     @RequestMapping(method = RequestMethod.POST, path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE) //, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void create(@RequestBody Booking booking) {
         bookingController.create(booking);
@@ -43,9 +49,5 @@ public class BookingAPI {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/bookings/{id}")
-    public Optional<Booking> getBookingById(@PathVariable("id") Integer id) {
-        Optional<Booking> booking = bookingController.getBookingById(id);
-        return booking;
-    }
+
 }
