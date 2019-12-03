@@ -18,7 +18,7 @@ public class RestaurantTableAPI {
     @Autowired
     private RestaurantTableController restaurantTableController;
 
-    @RequestMapping(method = RequestMethod.GET, path = "/tables", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, path = "/tables" /*,produces = MediaType.APPLICATION_JSON_VALUE*/)
     public Iterable<RestaurantTable> getListAll() {
         Iterable<RestaurantTable> listAll = restaurantTableController.getAllRestaurantTables();
         return listAll;

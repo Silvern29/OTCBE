@@ -15,6 +15,8 @@ import otc.be.repository.RestaurantTableRepository;
 import otc.be.repository.UserRepository;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
 
 
 @SpringBootApplication
@@ -97,29 +99,37 @@ public class OpenTableCloneApplication {
 //            restaurantTableRepository.save(t8);
 //            restaurantTableRepository.save(t9);
 //            restaurantTableRepository.save(t10);
-//			or = restaurantRepository.findById(3).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
-//			t1 = new RestaurantTable(1, 5, or);
-//			t2 = new RestaurantTable(2, 5, or);
-//			t3 = new RestaurantTable(3, 4, or);
-//			t4 = new RestaurantTable(4, 4, or);
-//			t5 = new RestaurantTable(5, 3, or);
-//			t6 = new RestaurantTable(6, 3, or);
-//			t7 = new RestaurantTable(7, 2, or);
-//			t8 = new RestaurantTable(8, 2, or);
-//			t9 = new RestaurantTable(9, 2, or);
-//			t10 = new RestaurantTable(10, 2, or);
-//			restaurantTableRepository.save(t1);
-//			restaurantTableRepository.save(t2);
-//			restaurantTableRepository.save(t3);
-//			restaurantTableRepository.save(t4);
-//			restaurantTableRepository.save(t5);
-//			restaurantTableRepository.save(t6);
-//			restaurantTableRepository.save(t7);
-//			restaurantTableRepository.save(t8);
-//			restaurantTableRepository.save(t9);
-//			restaurantTableRepository.save(t10);
+//            or = restaurantRepository.findById(3).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
+//            t1 = new RestaurantTable(1, 5, or);
+//            t2 = new RestaurantTable(2, 5, or);
+//            t3 = new RestaurantTable(3, 4, or);
+//            t4 = new RestaurantTable(4, 4, or);
+//            t5 = new RestaurantTable(5, 3, or);
+//            t6 = new RestaurantTable(6, 3, or);
+//            t7 = new RestaurantTable(7, 2, or);
+//            t8 = new RestaurantTable(8, 2, or);
+//            t9 = new RestaurantTable(9, 2, or);
+//            t10 = new RestaurantTable(10, 2, or);
+//            restaurantTableRepository.save(t1);
+//            restaurantTableRepository.save(t2);
+//            restaurantTableRepository.save(t3);
+//            restaurantTableRepository.save(t4);
+//            restaurantTableRepository.save(t5);
+//            restaurantTableRepository.save(t6);
+//            restaurantTableRepository.save(t7);
+//            restaurantTableRepository.save(t8);
+//            restaurantTableRepository.save(t9);
+//            restaurantTableRepository.save(t10);
 
-
+//            User bu1 = userRepository.findById(1).get(); //User mit ID für die zu erstellende Buchung auslesen
+//            RestaurantTable brt1 = restaurantTableRepository.findById(2).get(); // Tisch mit ID für die zu erstellende Buchung auslesen
+//            Restaurant br1 = brt1.getRestaurant();
+//            Booking b1 = new Booking(bu1, br1, brt1, Date.valueOf("2019-12-03"), Time.valueOf(LocalTime.now()));
+//            Booking b2 = new Booking(bu1, br1, brt1, Date.valueOf("2019-12-02"), Time.valueOf(LocalTime.now()));
+//            Booking b3 = new Booking(bu1, br1, brt1, Date.valueOf("2019-12-01"), Time.valueOf(LocalTime.now()));
+//            bookingRepository.save(b3);
+//            bookingRepository.save(b2);
+//            bookingRepository.save(b1);
 
 //            authorRepository.deleteAll();
 //            bookRepository.deleteAll();

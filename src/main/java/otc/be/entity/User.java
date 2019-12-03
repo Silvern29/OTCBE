@@ -3,11 +3,11 @@ package otc.be.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class User {
+public class User  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,7 +15,8 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    @JsonBackReference
+
+    @JsonBackReference(value = "booking-user")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = Booking.class) //ein User kann in viele Booking-Einträge involviert sein --> List
     private List<Booking> bookings;
 

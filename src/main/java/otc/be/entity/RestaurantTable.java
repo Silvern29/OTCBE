@@ -1,13 +1,17 @@
 package otc.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class RestaurantTable {
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+public class RestaurantTable  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,12 +21,12 @@ public class RestaurantTable {
     //ein Tisch ist genau einem Restaurant zugeordnet
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "id_restaurant")
-    @JsonBackReference
+    //@JsonManagedReference(value = "table-restaurant")
     //, insertable = false, updatable = false, nullable = false) auskommentiert, wenn es drin ist, geht das Anlegen der Tische mit der Restaurant-ID nicht
     private Restaurant restaurant;
 
     //ein Tisch kann in mehrere Bookings involviert sein
-    @JsonBackReference
+    @JsonBackReference(value = "booking-table")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurantTable", targetEntity = Booking.class)
     private List<Booking> bookings;
 

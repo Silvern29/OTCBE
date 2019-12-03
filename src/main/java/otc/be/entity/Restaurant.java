@@ -3,10 +3,11 @@ package otc.be.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class Restaurant {
+public class Restaurant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -19,12 +20,12 @@ public class Restaurant {
     private String info;
 
     //ein Restaurant hat  viele Tische  --> List
-    @JsonBackReference
+    @JsonBackReference(value = "table-restaurant")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = RestaurantTable.class)
     private List<RestaurantTable> restaurantTables;
 
     //ein Restaurant kann in mehrere Bookings involviert sein --> List
-    @JsonBackReference
+    @JsonBackReference(value = "booking-restaurant")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = Booking.class)
     private List<Booking> bookings;
 
