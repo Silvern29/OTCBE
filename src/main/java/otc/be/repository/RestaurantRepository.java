@@ -9,5 +9,4 @@ public interface RestaurantRepository extends CrudRepository<Restaurant, Integer
 
     Optional<Restaurant> findById(int id);
     Iterable<Restaurant> findByOrderByIdAsc();
-
 }

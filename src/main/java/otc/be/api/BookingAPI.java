@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import otc.be.controller.BookingController;
 import otc.be.entity.Booking;
 
-
 import java.util.Optional;
 
 @CrossOrigin
@@ -31,7 +30,8 @@ public class BookingAPI {
         return booking;
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE) //, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE)
+    //, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void create(@RequestBody Booking booking) {
         bookingController.create(booking);
         //return booking;
@@ -48,6 +48,4 @@ public class BookingAPI {
         bookingController.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

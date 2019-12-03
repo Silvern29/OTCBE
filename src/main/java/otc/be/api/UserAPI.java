@@ -6,12 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import otc.be.controller.UserController;
-import otc.be.entity.Restaurant;
 import otc.be.entity.User;
-import otc.be.repository.UserRepository;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -20,8 +16,8 @@ import java.util.Optional;
 public class UserAPI {
 
     @Autowired
-    UserController userController;
-    UserRepository userRepository;
+    private UserController userController;
+//    UserRepository userRepository;
 
 //    @RequestMapping(value="/users", method = RequestMethod.GET)
 //    List<User> getAllUsers(@RequestParam(required = false) String id){
@@ -44,10 +40,17 @@ public class UserAPI {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/users/{id}")
-    public Optional<User> getUserById(@PathVariable("id") Integer id) {
-        Optional<User> user = userController.getUserById(id);
-        return user;
+    public User getUserById(@PathVariable("id") Integer id) {
+        return userController.getUserById(id);
     }
+//    vorherige Version
+//    public ResponseEntity getUserById(@PathVariable("id") Integer id) {
+//        Optional<User> user = userController.getUserById(id);
+//        if(user.isPresent()){
+//            return new ResponseEntity(user.get(), HttpStatus.OK);
+//        }
+//        return new ResponseEntity(HttpStatus.NOT_FOUND);
+//    }
 
     @RequestMapping(method = RequestMethod.POST, path = "/users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public User create(@RequestBody User user) {
@@ -56,14 +59,33 @@ public class UserAPI {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/users/{id}")
-    public ResponseEntity<User> deleteById(@PathVariable("id") Integer id) {
-        userController.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public User deleteById(@PathVariable("id") Integer id) {
+        User user = userController.deleteById(id);
+        return user;
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/users")
     public User update(@RequestBody User user) {
-        userController.update(user);
-        return user;
+        User returnedUser = userController.update(user);
+        return returnedUser;
+    }
+
+//    vorherige Version
+//    public ResponseEntity update(@RequestBody User user) {
+//        User returnedUser = userController.update(user);
+//        if(returnedUser != null) {
+//            return new ResponseEntity<>(returnedUser, HttpStatus.OK);
+//        }
+//        return new ResponseEntity(HttpStatus.NOT_FOUND);
+//    }
+
+    //@PostMapping("/users/login")
+    @RequestMapping(method = RequestMethod.POST, path = "/users/login")
+    public ResponseEntity login(@RequestBody User user) {
+        User returnedUser = userController.login(user);
+        if(returnedUser != null) {
+            return new ResponseEntity<>(returnedUser, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
     }
 }

@@ -14,7 +14,7 @@ import java.util.Optional;
 public class RestaurantController {
 
     @Autowired
-    RestaurantRepository restaurantRepository;
+    private RestaurantRepository restaurantRepository;
 
     public Iterable<Restaurant> getAllRestaurants() {
         return restaurantRepository.findByOrderByIdAsc();

@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import otc.be.entity.User;
 
+import java.util.LinkedList;
 import java.util.Optional;
 
 @Repository
@@ -18,6 +19,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     Optional<User> findByEmail(@Param("email") String email);
 
-    Iterable<User> findByOrderByIdAsc();
+    LinkedList<User> findByOrderByIdAsc();
 
-    }
+}

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(path="api")
+@RequestMapping(path = "api")
 public class RestaurantTableAPI {
 
     @Autowired
@@ -37,14 +37,21 @@ public class RestaurantTableAPI {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/tables")
-    public RestaurantTable update(@RequestBody RestaurantTable restaurant) {
-        restaurantTableController.update(restaurant);
-        return restaurant;
+    public RestaurantTable update(@RequestBody RestaurantTable restaurantTable) {
+        restaurantTableController.update(restaurantTable);
+        return restaurantTable;
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/tables/{id}")
     public ResponseEntity<RestaurantTable> deletebyId(@PathVariable("id") Integer id) {
         restaurantTableController.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/tables/free/{id}")
+    public /*Optional<RestaurantTable>*/ void getRestaurantTableByIdIsFree(@PathVariable("id") Integer id) {
+        //Optional<RestaurantTable> restaurantTable =
+        restaurantTableController.getRestaurantTableByIdIsFree(id);
+        //return restaurantTable;
     }
 }

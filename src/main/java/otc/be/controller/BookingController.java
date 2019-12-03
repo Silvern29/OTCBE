@@ -9,7 +9,6 @@ import otc.be.repository.BookingRepository;
 import otc.be.repository.RestaurantRepository;
 import otc.be.repository.RestaurantTableRepository;
 
-import java.util.Collections;
 import java.util.Optional;
 
 @Controller
@@ -21,7 +20,6 @@ public class BookingController {
     private RestaurantRepository restaurantRepository;
     @Autowired
     private RestaurantTableRepository restaurantTableRepository;
-
 
     public Iterable<Booking> getAllBookings() {
         return bookingRepository.findByOrderByIdAsc();
@@ -46,7 +44,6 @@ public class BookingController {
 
     public Booking update(Booking booking) {
         Booking updatedBooking = bookingRepository.findById(booking.getId()).get();
-
         //ist ein Datum eingegeben? -> weicht das in der DB hinterlegte Buchungsdatum vom eingegebenen Buchungsdatum ab, dann schreibe das eingegebene Datum im nächsten Schritt in die DB
         if ((booking.getDate() != null) && (booking.getDate() != updatedBooking.getDate()))
             updatedBooking.setDate(booking.getDate());
@@ -68,7 +65,7 @@ public class BookingController {
                 updatedBooking.setRestaurant(tempR);
             }
         }
-        //ist ein Restaurant eingegeben - würde ich weglassen, da beim Eintrag des Restaurants ohnehin geschaut wird, dass das laut Tisch-ID hinterlegte Restaurant in der DB gespeichert wird. Umsetzung bei Create fehlt noch!!!
+        //ist ein Restaurant eingegeben - würde ich weglassen, da beim Eintrag des Restaurants ohnehin geschaut wird, dass das laut Tisch-ID hinterlegte Restaurant in der DB gespeichert wird.
         //Schreiben in die DB
         bookingRepository.save(updatedBooking);
         System.out.println("Die Änderung der Buchung sollte erfasst sein.");
