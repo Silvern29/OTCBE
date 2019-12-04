@@ -49,9 +49,7 @@ public class RestaurantTableAPI {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/tables/free/{id}")
-    public /*Optional<RestaurantTable>*/ void getRestaurantTableByIdIsFree(@PathVariable("id") Integer id) {
-        //Optional<RestaurantTable> restaurantTable =
-        restaurantTableController.getRestaurantTableByIdIsFree(id);
-        //return restaurantTable;
+    public boolean getRestaurantTableByIdIsFree(@PathVariable("id") Integer id) {
+        return restaurantTableController.getRestaurantTableByIdIsFree(id);
     }
 }
