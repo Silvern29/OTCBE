@@ -51,26 +51,27 @@ public class RestaurantTableController {
         restaurantTableRepository.deleteById(id);
     }
 
-    public boolean getRestaurantTableByIdIsFree(Integer id) {
+    public boolean getRestaurantTableByIdIsFree(Integer id, LocalDateTime ldtAnfrage) {
         Optional<RestaurantTable> oRT = getRestaurantTableById(id);
         boolean reservierenIstMöglich = true;
         if (oRT.isPresent()) {
             RestaurantTable currentRT = oRT.get();
-            System.out.println("Der Tisch Nr. " + id + " gehört zum Restaurant ID " + currentRT.getRestaurant().getId() + ", Name " + currentRT.getRestaurant().getName() + ", dessen Tisch-Nr. ist " + currentRT.getTableNrRest() + ", Platz für " + currentRT.getPax() + " Personen.");
-            Date anfrageDatum = Date.valueOf("2019-12-05");
-            Time anfrageUhrzeit = Time.valueOf("00:30:00");
-            int anfrageTag = anfrageDatum.getDay()+1;
-            int anfrageMonat = anfrageDatum.getMonth() + 1;
-            int anfrageJahr = anfrageDatum.getYear() + 1900;
-            int anfrageStunde = anfrageUhrzeit.getHours();
-            int anfrageMinute = anfrageUhrzeit.getMinutes();
-            LocalDateTime ldtAnfrage = LocalDateTime.of(anfrageJahr, anfrageMonat, anfrageTag, anfrageStunde, anfrageMinute);
+//            Zur Erprobung benötigt:
+//            System.out.println("Der Tisch Nr. " + id + " gehört zum Restaurant ID " + currentRT.getRestaurant().getId() + ", Name " + currentRT.getRestaurant().getName() + ", dessen Tisch-Nr. ist " + currentRT.getTableNrRest() + ", Platz für " + currentRT.getPax() + " Personen.");
+//            Date anfrageDatum = Date.valueOf("2019-12-05");
+//            Time anfrageUhrzeit = Time.valueOf("00:30:00");
+//            int anfrageTag = anfrageDatum.getDay()+1;
+//            int anfrageMonat = anfrageDatum.getMonth() + 1;
+//            int anfrageJahr = anfrageDatum.getYear() + 1900;
+//            int anfrageStunde = anfrageUhrzeit.getHours();
+//            int anfrageMinute = anfrageUhrzeit.getMinutes();
+//            LocalDateTime ldtAnfrage = LocalDateTime.of(anfrageJahr, anfrageMonat, anfrageTag, anfrageStunde, anfrageMinute);
             LocalDateTime ldt1HourBefore = ldtAnfrage.minusMinutes(59);
             LocalDateTime ldt1HourLater = ldtAnfrage.plusMinutes(59);
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-            System.out.println("Zum Test wird angefragt für den " + ldtAnfrage.format(dtf) + ", zerlegt in " + anfrageTag + "." + anfrageMonat + "." + anfrageJahr + "; Uhrzeit: " + anfrageUhrzeit + ", zerlegt in " + anfrageStunde + ":" + anfrageMinute);
+            //System.out.println("Zum Test wird angefragt für den " + ldtAnfrage.format(dtf) + ", zerlegt in " + anfrageTag + "." + anfrageMonat + "." + anfrageJahr + "; Uhrzeit: " + anfrageUhrzeit + ", zerlegt in " + anfrageStunde + ":" + anfrageMinute);
             //System.out.println("Es darf keine Buchung im Zeitraum von " + ldt1HourBefore.format(dtf) + " bis " + ldt1HourLater.format(dtf) + " geben.");
-            System.out.println("Das heißt, das Datum aus der Buchung muss kleiner als " + ldt1HourBefore.format(dtf) + " und größer als " + ldt1HourLater.format(dtf) + " sein, damit eine Reservierung möglich ist.");
+            //System.out.println("Das heißt, das Datum aus der Buchung muss kleiner als " + ldt1HourBefore.format(dtf) + " und größer als " + ldt1HourLater.format(dtf) + " sein, damit eine Reservierung möglich ist.");
 
             LinkedList<Booking> bookings = bookingRepository.findRestTableByOrderByIdAsc(id);
 
