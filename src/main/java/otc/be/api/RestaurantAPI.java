@@ -47,4 +47,9 @@ public class RestaurantAPI {
         Optional<Restaurant> restaurant = restaurantController.getRestaurantById(id);
         return restaurant;
     }
+    @RequestMapping(method = RequestMethod.GET, path = "/restaurants/search/{fragment}")
+    public Iterable<Restaurant> getRestaurantById(@PathVariable("fragment") String fragment) {
+        Iterable<Restaurant> restaurant = restaurantController.getRestaurantWithFragment(fragment);
+        return restaurant;
+    }
 }

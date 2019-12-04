@@ -22,6 +22,9 @@ public class RestaurantController {
         return restaurantRepository.findById(id);
     }
 
+    public Iterable<Restaurant> getRestaurantWithFragment(String fragment) {return restaurantRepository.findAllWithFragment(fragment);}
+
+
     public void create(Restaurant restaurant) {
         restaurantRepository.save(restaurant);
         System.out.println("Jetzt sollte ein neues Restaurant in der Tabelle Restaurant eingetragen worden sein.");
