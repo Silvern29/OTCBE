@@ -19,7 +19,7 @@ public class Restaurant implements Serializable {
     private String city;
     private String info;
 
-    //ein Restaurant hat  viele Tische  --> List
+    //ein Restaurant hat viele Tische  --> List
     @JsonBackReference(value = "table-restaurant")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = RestaurantTable.class)
     private List<RestaurantTable> restaurantTables;

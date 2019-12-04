@@ -31,7 +31,6 @@ public class BookingAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE)
-    //, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void create(@RequestBody Booking booking) {
         bookingController.create(booking);
         //return booking;

@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import otc.be.controller.UserController;
 import otc.be.entity.User;
 
-import java.util.Optional;
-
 @CrossOrigin
 @RestController
 @RequestMapping(path = "api")
@@ -79,7 +77,6 @@ public class UserAPI {
 //        return new ResponseEntity(HttpStatus.NOT_FOUND);
 //    }
 
-    //@PostMapping("/users/login")
     @RequestMapping(method = RequestMethod.POST, path = "/users/login")
     public ResponseEntity login(@RequestBody User user) {
         User returnedUser = userController.login(user);

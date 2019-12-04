@@ -47,9 +47,9 @@ public class RestaurantTableAPI {
         restaurantTableController.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @RequestMapping(method = RequestMethod.GET, path = "/tables/free/{id}")
-    public boolean getRestaurantTableByIdIsFree(@PathVariable("id") Integer id) {
-        return restaurantTableController.getRestaurantTableByIdIsFree(id);
-    }
+//    Zur Entwicklung/Erprobung geht aufgrund geänderter Eingangsparameter für restaurantTableController.getRestaurantTableByIdIsFree(id) nicht mehr
+//    @RequestMapping(method = RequestMethod.GET, path = "/tables/free/{id}")
+//    public boolean getRestaurantTableByIdIsFree(@PathVariable("id") Integer id) {
+//        return restaurantTableController.getRestaurantTableByIdIsFree(id);
+//    }
 }
