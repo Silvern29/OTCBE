@@ -10,23 +10,33 @@ import java.util.List;
 public class Restaurant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "kitchen")
     private String kitchen;
+    @Column(name = "street")
     private String street;
+    @Column(name = "ap_nr")
     private String apNr;
+    @Column(name = "zip")
     private String zip;
+    @Column(name = "city")
     private String city;
+    @Column(name = "info")
     private String info;
 
     //ein Restaurant hat viele Tische  --> List
     @JsonBackReference(value = "table-restaurant")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = RestaurantTable.class)
+    @Column(name = "restaurant_tables")
     private List<RestaurantTable> restaurantTables;
 
     //ein Restaurant kann in mehrere Bookings involviert sein --> List
     @JsonBackReference(value = "booking-restaurant")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = Booking.class)
+    @Column(name = "bookings")
     private List<Booking> bookings;
 
     //leerer Konstruktor (erforderlich)

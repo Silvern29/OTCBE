@@ -5,7 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import otc.be.controller.AuthorizationController;
 import otc.be.controller.BookingController;
+import otc.be.controller.UserController;
+import otc.be.dto.BookingDTO;
 import otc.be.entity.Booking;
 
 import java.util.Optional;
@@ -20,20 +23,17 @@ public class BookingAPI {
 
     @RequestMapping(method = RequestMethod.GET, path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Booking> getListAll() {
-        Iterable<Booking> listAll = bookingController.getAllBookings();
-        return listAll;
+        return bookingController.getAllBookings();
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/bookings/{id}")
     public Optional<Booking> getBookingById(@PathVariable("id") Integer id) {
-        Optional<Booking> booking = bookingController.getBookingById(id);
-        return booking;
+        return bookingController.getBookingById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody Booking booking) {
-        bookingController.create(booking);
-        //return booking;
+    public void create(@RequestBody BookingDTO bookingDTO) {
+        bookingController.create(bookingDTO);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/bookings")

@@ -13,6 +13,7 @@ import java.sql.Date;
 public class Booking  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     //eine Buchung ist genau einem Kunden zugeordnet
@@ -34,19 +35,20 @@ public class Booking  implements Serializable {
     @JoinColumn(name = "id_restaurant_table")   //,  insertable = false, updatable = false, nullable = false)
     private RestaurantTable restaurantTable;
 
+    @Column(name = "date")
     private Date date;
+    @Column(name = "time")
     private Time time;
 
     //leerer Konstruktor erforderlich
     public Booking() {
     }
 
-    public Booking(User user, Restaurant restaurant, RestaurantTable restaurantTable, Date date, Time time) {
+    public Booking(User user, Restaurant restaurant, RestaurantTable restaurantTable, Date date) {
         this.user = user;
         this.restaurant = restaurant;
         this.restaurantTable = restaurantTable;
         this.date = date;
-        this.time = time;
     }
 
     public int getId() {

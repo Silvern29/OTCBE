@@ -20,14 +20,12 @@ public class RestaurantTableAPI {
 
     @RequestMapping(method = RequestMethod.GET, path = "/tables" /*,produces = MediaType.APPLICATION_JSON_VALUE*/)
     public Iterable<RestaurantTable> getListAll() {
-        Iterable<RestaurantTable> listAll = restaurantTableController.getAllRestaurantTables();
-        return listAll;
+        return restaurantTableController.getAllRestaurantTables();
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/tables/{id}")
     public Optional<RestaurantTable> getRestaurantTableById(@PathVariable("id") Integer id) {
-        Optional<RestaurantTable> restaurant = restaurantTableController.getRestaurantTableById(id);
-        return restaurant;
+        return restaurantTableController.getRestaurantTableById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/tables", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -5,8 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import otc.be.controller.AuthorizationController;
 import otc.be.controller.UserController;
+import otc.be.dto.AuthorizedUserDTO;
+import otc.be.dto.LoginDTO;
+import otc.be.dto.UserDTO;
 import otc.be.entity.User;
+import otc.be.exception.EmailExistsException;
 
 @CrossOrigin
 @RestController
@@ -15,7 +20,8 @@ public class UserAPI {
 
     @Autowired
     private UserController userController;
-//    UserRepository userRepository;
+    @Autowired
+    private AuthorizationController authorizationController;
 
 //    @RequestMapping(value="/users", method = RequestMethod.GET)
 //    List<User> getAllUsers(@RequestParam(required = false) String id){
@@ -31,58 +37,35 @@ public class UserAPI {
 //        return users;
 //    }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/users/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public AuthorizedUserDTO login(@RequestBody LoginDTO loginDTO) {
+        return authorizationController.login(loginDTO);
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<User> getListAll() {
-        Iterable<User> listAll = userController.getAllUsers();
-        return listAll;
+        return userController.getAllUsers();
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/users/{id}")
     public User getUserById(@PathVariable("id") Integer id) {
         return userController.getUserById(id);
     }
-//    vorherige Version
-//    public ResponseEntity getUserById(@PathVariable("id") Integer id) {
-//        Optional<User> user = userController.getUserById(id);
-//        if(user.isPresent()){
-//            return new ResponseEntity(user.get(), HttpStatus.OK);
-//        }
-//        return new ResponseEntity(HttpStatus.NOT_FOUND);
-//    }
 
     @RequestMapping(method = RequestMethod.POST, path = "/users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User create(@RequestBody User user) {
+    public UserDTO create(@RequestBody UserDTO user) throws EmailExistsException {
         userController.create(user);
         return user;
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/users/{id}")
-    public User deleteById(@PathVariable("id") Integer id) {
-        User user = userController.deleteById(id);
-        return user;
+    public ResponseEntity<User> deleteById(@PathVariable("id") Integer id) {
+        userController.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/users")
     public User update(@RequestBody User user) {
-        User returnedUser = userController.update(user);
-        return returnedUser;
-    }
-
-//    vorherige Version
-//    public ResponseEntity update(@RequestBody User user) {
-//        User returnedUser = userController.update(user);
-//        if(returnedUser != null) {
-//            return new ResponseEntity<>(returnedUser, HttpStatus.OK);
-//        }
-//        return new ResponseEntity(HttpStatus.NOT_FOUND);
-//    }
-
-    @RequestMapping(method = RequestMethod.POST, path = "/users/login")
-    public ResponseEntity login(@RequestBody User user) {
-        User returnedUser = userController.login(user);
-        if(returnedUser != null) {
-            return new ResponseEntity<>(returnedUser, HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        return userController.update(user);
     }
 }

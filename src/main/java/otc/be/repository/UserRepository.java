@@ -17,7 +17,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "SELECT * FROM user where last_name LIKE %:lastName%", nativeQuery = true)
     Iterable<User> findUserByLastName(@Param("lastName") String lastName);
 
-    Optional<User> findByEmail(@Param("email") String email);
+    User findByEmail(@Param("email") String email);
 
     LinkedList<User> findByOrderByIdAsc();
 }
