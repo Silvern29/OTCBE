@@ -6,8 +6,17 @@ import org.springframework.stereotype.Controller;
 import otc.be.dto.UserDTO;
 import otc.be.entity.User;
 import otc.be.exception.EmailExistsException;
+import otc.be.entity.Booking;
+import otc.be.entity.User;
+import otc.be.repository.BookingRepository;
 import otc.be.repository.UserRepository;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -18,6 +27,8 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BookingRepository bookingRepository;  //für die Abfrage - alle Buchungen eines Users in Zukunft (Vorarbeit für das Stornieren von Buchungen)
 
     public Iterable<User> getAllUsers() {
         LinkedList<User> allUsers = userRepository.findByOrderByIdAsc();
@@ -33,9 +44,8 @@ public class UserController {
             User currentUser = optionalUser.get();
             currentUser.setPassword("******");
             return currentUser;
-        }
-        else{
-            String firstName = "Es gibt keinen User mit der ID " +  id;
+        } else {
+            String firstName = "Es gibt keinen User mit der ID " + id;
             System.out.println(firstName);
             return new User(firstName, "Quelle: getUserById", "", "");
         }
@@ -72,7 +82,7 @@ public class UserController {
             System.out.println("Die Userdaten sollten auf ID " + updatedUser.getId() + " " + updatedUser.getFirstName() + " " + updatedUser.getLastName() + " " + updatedUser.getEmail() + " " + updatedUser.getPassword() + " geändert worden sein.");
             return updatedUser;
         } else {
-            String firstName = "Es gibt keinen User mit der ID " +  user.getId();
+            String firstName = "Es gibt keinen User mit der ID " + user.getId();
             System.out.println(firstName);
             return new User(firstName, "Quelle: update", "", "");
         }
@@ -86,7 +96,7 @@ public class UserController {
             userRepository.deleteById(id);
             return currentUser;
         } else {
-            String firstName = "Es gibt keinen User mit der ID " +  id;
+            String firstName = "Es gibt keinen User mit der ID " + id;
             System.out.println(firstName);
             return new User(firstName, "Quelle: deleteById", "", "");
         }
@@ -112,4 +122,46 @@ public class UserController {
 //            return new User(firstName, "Quelle: login", "", "");
 //        }
 //    }
+
+    public LinkedList<Booking> allBookingsInFuture(Integer id) { //user-id prüfen
+        Optional<User> optionalCurrentUser = userRepository.findById(id);
+        LinkedList<Booking> allBookings = new LinkedList<>();
+        if (optionalCurrentUser.isPresent()) {
+            Date datum = Date.valueOf(LocalDate.now());
+            Time uhrzeit = Time.valueOf(LocalTime.now());
+            System.out.println("Zu Kontrollzwecken: " + datum + " " + uhrzeit);
+            allBookings = bookingRepository.getListAllBookingsinFuture(id, datum, uhrzeit);
+            if (allBookings.size() == 0) {
+                String meldung = "Für den User " + id + " wurden keine in Zukunft liegenden Buchungen gefunden";
+                System.out.println(meldung);
+                User tempUser = new User();
+                tempUser.setFirstName(meldung);
+                Booking tempBooking = new Booking();
+                tempBooking.setUser(tempUser);
+                allBookings.add(tempBooking);
+            } else {
+                //zu Entwicklungszwecken
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy /  HH:mm");
+                for (int i = 0; i < allBookings.size(); i++) {
+                    Booking temp = allBookings.get(i); //für vereinfachte Ausgabe
+                    int anfrageTag = temp.getDate().getDay() + 1;
+                    int anfrageMonat = temp.getDate().getMonth() + 1;
+                    int anfrageJahr = temp.getDate().getYear() + 1900;
+                    int anfrageStunde = temp.getTime().getHours();
+                    int anfrageMinute = temp.getTime().getMinutes();
+                    LocalDateTime ldtBuchung = LocalDateTime.of(anfrageJahr, anfrageMonat, anfrageTag, anfrageStunde, anfrageMinute);
+                    System.out.println("Booking-ID: " + temp.getId() + ", User-ID: " + temp.getUser() + ", Rest-ID: " + temp.getRestaurant().getId() + " " + temp.getRestaurant().getName() + ", Tisch-ID: " + temp.getRestaurantTable().getId() + " am " + ldtBuchung.format(dtf));
+                }
+            }
+        } else {
+            String meldung = "Es gibt keinen User mit der ID " + id;
+            System.out.println(meldung);
+            User tempUser = new User();
+            tempUser.setFirstName(meldung);
+            Booking tempBooking = new Booking();
+            tempBooking.setUser(tempUser);
+            allBookings.add(tempBooking);
+        }
+        return allBookings;
+    }
 }

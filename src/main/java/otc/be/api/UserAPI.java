@@ -10,8 +10,11 @@ import otc.be.controller.UserController;
 import otc.be.dto.AuthorizedUserDTO;
 import otc.be.dto.LoginDTO;
 import otc.be.dto.UserDTO;
+import otc.be.entity.Booking;
 import otc.be.entity.User;
 import otc.be.exception.EmailExistsException;
+
+import java.util.LinkedList;
 
 @CrossOrigin
 @RestController
@@ -67,5 +70,11 @@ public class UserAPI {
     @RequestMapping(method = RequestMethod.PUT, path = "/users")
     public User update(@RequestBody User user) {
         return userController.update(user);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/users/allBookingsInFuture/{id}")
+    public LinkedList<Booking> allBookingsInFuture(@PathVariable("id") Integer id) {
+        LinkedList allBookings = userController.allBookingsInFuture(id);
+        return allBookings;
     }
 }
