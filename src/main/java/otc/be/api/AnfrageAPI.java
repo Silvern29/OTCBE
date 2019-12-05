@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import otc.be.controller.AnfrageController;
 import otc.be.entity.Anfrage;
 
+import java.util.LinkedList;
+
 
 @CrossOrigin
 @RestController
@@ -16,9 +18,9 @@ public class AnfrageAPI {
     private AnfrageController anfrageController;
 
     @RequestMapping(method = RequestMethod.POST, path = "/anfrage", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Anfrage create(@RequestBody Anfrage anfrage) {
-        anfrageController.step1(anfrage);
-        return anfrage;
+    public LinkedList<Anfrage> create(@RequestBody Anfrage anfrage) {
+        LinkedList<Anfrage> antwortliste = anfrageController.step1(anfrage);
+        return antwortliste;
     }
 
 }
