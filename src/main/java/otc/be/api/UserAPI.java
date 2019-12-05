@@ -6,7 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import otc.be.controller.UserController;
+import otc.be.entity.Booking;
 import otc.be.entity.User;
+
+import java.util.LinkedList;
 
 @CrossOrigin
 @RestController
@@ -84,5 +87,11 @@ public class UserAPI {
             return new ResponseEntity<>(returnedUser, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/users/allBookingsInFuture/{id}")
+    public LinkedList<Booking> allBookingsInFuture(@PathVariable("id") Integer id) {
+        LinkedList allBookings = userController.allBookingsInFuture(id);
+        return allBookings;
     }
 }
