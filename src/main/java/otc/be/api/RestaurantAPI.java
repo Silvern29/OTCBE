@@ -20,14 +20,12 @@ public class RestaurantAPI {
 
     @RequestMapping(method = RequestMethod.GET, path = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<Restaurant> getListAll() {
-        Iterable<Restaurant> listAll = restaurantController.getAllRestaurants();
-        return listAll;
+        return restaurantController.getAllRestaurants();
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE) //, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void create(@RequestBody Restaurant restaurant) {
         restaurantController.create(restaurant);
-        //return restaurant;
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/restaurants")
@@ -44,12 +42,10 @@ public class RestaurantAPI {
 
     @RequestMapping(method = RequestMethod.GET, path = "/restaurants/{id}")
     public Optional<Restaurant> getRestaurantById(@PathVariable("id") Integer id) {
-        Optional<Restaurant> restaurant = restaurantController.getRestaurantById(id);
-        return restaurant;
+        return restaurantController.getRestaurantById(id);
     }
     @RequestMapping(method = RequestMethod.GET, path = "/restaurants/search/{fragment}")
     public Iterable<Restaurant> getRestaurantById(@PathVariable("fragment") String fragment) {
-        Iterable<Restaurant> restaurant = restaurantController.getRestaurantWithFragment(fragment);
-        return restaurant;
+        return restaurantController.getRestaurantWithFragment(fragment);
     }
 }

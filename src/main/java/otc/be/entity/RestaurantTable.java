@@ -14,8 +14,11 @@ public class RestaurantTable  implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "table_nr_rest")
     private int tableNrRest;
+    @Column(name = "pax")
     private int pax;
 
     //ein Tisch ist genau einem Restaurant zugeordnet
@@ -28,6 +31,7 @@ public class RestaurantTable  implements Serializable {
     //ein Tisch kann in mehrere Bookings involviert sein
     @JsonBackReference(value = "booking-table")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurantTable", targetEntity = Booking.class)
+    @Column(name = "bookings")
     private List<Booking> bookings;
 
     //leerer Konstruktor

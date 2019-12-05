@@ -1,7 +1,11 @@
 package otc.be.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import otc.be.dto.UserDTO;
+import otc.be.entity.User;
+import otc.be.exception.EmailExistsException;
 import otc.be.entity.Booking;
 import otc.be.entity.User;
 import otc.be.repository.BookingRepository;
@@ -18,6 +22,9 @@ import java.util.Optional;
 
 @Controller
 public class UserController {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -44,10 +51,24 @@ public class UserController {
         }
     }
 
-    public void create(User user) {
-        userRepository.save(user);
-        System.out.println("Jetzt sollte ein neuer User in der Tabelle User eingetragen worden sein.");
+    public User create(UserDTO accountDto) throws EmailExistsException {
+        if (emailExists(accountDto.getEmail())) {
+            throw new EmailExistsException(
+                    "There is an account with that email adress:" + accountDto.getEmail());
+        }
+        User user = new User();
+        user.setFirstName(accountDto.getFirstName());
+        user.setLastName(accountDto.getLastName());
+        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        user.setEmail(accountDto.getEmail());
+        return userRepository.save(user);
+//        System.out.println("Jetzt sollte ein neuer User in der Tabelle User eingetragen worden sein.");
     }
+
+    private boolean emailExists(final String email) {
+        return userRepository.findByEmail(email) != null;
+    }
+
 
     public User update(User user) {
         Optional<User> optionalUser = userRepository.findById(user.getId());
@@ -81,26 +102,26 @@ public class UserController {
         }
     }
 
-    public User login(User user) {
-        Optional<User> optionalCurrentUser = userRepository.findById(user.getId());
-        if (optionalCurrentUser.isPresent()) {
-            User currentUser = optionalCurrentUser.get();
-            System.out.print("Der User: " + currentUser.getFirstName() + " " + currentUser.getLastName() + " mit der ID " + currentUser.getId() + " hat sein Passwort ");
-            if (currentUser.getPassword().equals(user.getPassword())) {
-                System.out.println("richtig eingegeben -> LOGGED IN");
-                currentUser.setPassword("******");
-                //String jws = Jwts.bu
-                return currentUser;
-            } else {
-                System.out.println("nicht richtig eingegeben -> not permitted.");
-                return new User("Passwort nicht richtig eingegeben", "Quelle: login", "", "");
-            }
-        } else {
-            System.out.println("Es gibt keinen User mit der ID " + user.getId());
-            String firstName = "Es gibt keinen User mit der ID " + user.getId();
-            return new User(firstName, "Quelle: login", "", "");
-        }
-    }
+//    public User login(User user) {
+//        Optional<User> optionalCurrentUser = userRepository.findById(user.getId());
+//        if (optionalCurrentUser.isPresent()) {
+//            User currentUser = optionalCurrentUser.get();
+//            System.out.print("Der User: " + currentUser.getFirstName() + " " + currentUser.getLastName() + " mit der ID " + currentUser.getId() + " hat sein Passwort ");
+//            if (currentUser.getPassword().equals(user.getPassword())) {
+//                System.out.println("richtig eingegeben -> LOGGED IN");
+//                currentUser.setPassword("******");
+//                //String jws = Jwts.bu
+//                return currentUser;
+//            } else {
+//                System.out.println("nicht richtig eingegeben -> not permitted.");
+//                return new User("Passwort nicht richtig eingegeben", "Quelle: login", "", "");
+//            }
+//        } else {
+//            System.out.println("Es gibt keinen User mit der ID " + user.getId());
+//            String firstName = "Es gibt keinen User mit der ID " +  user.getId();
+//            return new User(firstName, "Quelle: login", "", "");
+//        }
+//    }
 
     public LinkedList<Booking> allBookingsInFuture(Integer id) { //user-id prüfen
         Optional<User> optionalCurrentUser = userRepository.findById(id);

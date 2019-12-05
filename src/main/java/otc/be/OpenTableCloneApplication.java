@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import otc.be.entity.Booking;
 import otc.be.entity.Restaurant;
 import otc.be.entity.RestaurantTable;
@@ -30,6 +32,11 @@ public class OpenTableCloneApplication {
     @Autowired
     BookingRepository bookingRepository;
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(OpenTableCloneApplication.class, args);
     }
@@ -37,7 +44,11 @@ public class OpenTableCloneApplication {
     @Bean
     CommandLineRunner runner() {
         return args -> {
-//            //userRepository.deleteAll();
+//            userRepository.deleteAll();
+//            restaurantRepository.deleteAll();
+//            restaurantTableRepository.deleteAll();
+//            bookingRepository.deleteAll();
+
 //            User u1 = new User("Anton", "Ameise", "anton.ameise@aol.at", "abcdef");
 //            User u2 = new User("Bernd", "Bande", "bernd.bande@gmx.at", "aaaaaa");
 //            User u3 = new User("Clara", "Chor", "clara.chor@drei.at", "1111");
@@ -45,7 +56,6 @@ public class OpenTableCloneApplication {
 //            userRepository.save(u2);
 //            userRepository.save(u3);
 //
-//            //restaurantRepository.deleteAll();
 //            Restaurant r1 = new Restaurant("Gasthaus Rössle", "gutbürgerlich", "Rautenastraße", "28", "6832", "Röthis", "teuer, wegen Reichtum öfter geschlossen, feiertags geschlossen");
 //            Restaurant r2 = new Restaurant("Babbo Bar", "italienisch", "Donaustraße", "103", "12043", "Berlin", "authentisch, für Rendezvous geeignet, beachtliche Weinkarte");
 //            Restaurant r3 = new Restaurant("Chotto Motto", "kreative Küche", "Frith Street", "11-13", "W1D 4RB", "London", "für Rendezvous geeignet, besondere Anlässe");
@@ -53,8 +63,7 @@ public class OpenTableCloneApplication {
 //            restaurantRepository.save(r2);
 //            restaurantRepository.save(r3);
 
-//            restaurantTableRepository.deleteAll();
-//            Restaurant or = restaurantRepository.findById(1).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
+//            Restaurant or = restaurantRepository.findById(45).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
 //            System.out.println(or.getId() + " " + or.getName());
 //            RestaurantTable t1 = new RestaurantTable(1, 4, or);
 //            RestaurantTable t2 = new RestaurantTable(2, 4, or);
@@ -76,7 +85,7 @@ public class OpenTableCloneApplication {
 //            restaurantTableRepository.save(t8);
 //            restaurantTableRepository.save(t9);
 //            restaurantTableRepository.save(t10);
-//            or = restaurantRepository.findById(2).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
+//            or = restaurantRepository.findById(46).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
 //            System.out.println(or.getId() + " " + or.getName());
 //            t1 = new RestaurantTable(1, 8, or);
 //            t2 = new RestaurantTable(2, 8, or);
@@ -98,7 +107,7 @@ public class OpenTableCloneApplication {
 //            restaurantTableRepository.save(t8);
 //            restaurantTableRepository.save(t9);
 //            restaurantTableRepository.save(t10);
-//            or = restaurantRepository.findById(3).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
+//            or = restaurantRepository.findById(47).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
 //            t1 = new RestaurantTable(1, 5, or);
 //            t2 = new RestaurantTable(2, 5, or);
 //            t3 = new RestaurantTable(3, 4, or);
@@ -120,8 +129,8 @@ public class OpenTableCloneApplication {
 //            restaurantTableRepository.save(t9);
 //            restaurantTableRepository.save(t10);
 
-//            User bu1 = userRepository.findById(1).get(); //User mit ID für die zu erstellende Buchung auslesen
-//            RestaurantTable brt1 = restaurantTableRepository.findById(2).get(); // Tisch mit ID für die zu erstellende Buchung auslesen
+//            User bu1 = userRepository.findById(41).get(); //User mit ID für die zu erstellende Buchung auslesen
+//            RestaurantTable brt1 = restaurantTableRepository.findById(34).get(); // Tisch mit ID für die zu erstellende Buchung auslesen
 //            Restaurant br1 = brt1.getRestaurant();
 //            Booking b1 = new Booking(bu1, br1, brt1, Date.valueOf("2019-12-03"), Time.valueOf(LocalTime.now()));
 //            Booking b2 = new Booking(bu1, br1, brt1, Date.valueOf("2019-12-02"), Time.valueOf(LocalTime.now()));
