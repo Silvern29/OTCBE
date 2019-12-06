@@ -1,6 +1,7 @@
 package otc.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import otc.be.dto.Picture;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -38,6 +39,9 @@ public class Restaurant implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "restaurant", targetEntity = Booking.class)
     @Column(name = "bookings")
     private List<Booking> bookings;
+
+    @Column(name = "pictures")
+    private Picture[] pictures;
 
     //leerer Konstruktor (erforderlich)
     public Restaurant() {
@@ -145,5 +149,13 @@ public class Restaurant implements Serializable {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    public Picture[] getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(Picture[] pictures) {
+        this.pictures = pictures;
     }
 }
