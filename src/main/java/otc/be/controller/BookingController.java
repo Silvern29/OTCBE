@@ -90,7 +90,7 @@ public class BookingController {
     }
 
     public void deleteById(Integer id) {
-        System.out.println("Nun sollte das Restaurant mit der ID " + id + " gelöscht worden sein.");
+        System.out.println("Nun sollte die Buchung mit der ID " + id + " gelöscht worden sein.");
         bookingRepository.deleteById(id);
     }
 }

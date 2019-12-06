@@ -24,7 +24,6 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -59,6 +58,7 @@ public class UserController {
         User user = new User();
         user.setFirstName(accountDto.getFirstName());
         user.setLastName(accountDto.getLastName());
+        //Passwordencoder hashes the password using bcrypt
         user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setEmail(accountDto.getEmail());
         return userRepository.save(user);
@@ -74,10 +74,10 @@ public class UserController {
         Optional<User> optionalUser = userRepository.findById(user.getId());
         if (optionalUser.isPresent()) {
             User updatedUser = optionalUser.get();
-            if (!user.getFirstName().equals("")) updatedUser.setFirstName(user.getFirstName());
-            if (!user.getLastName().equals("")) updatedUser.setLastName(user.getLastName());
-            if (!user.getEmail().equals("")) updatedUser.setEmail(user.getEmail());
-            if (!user.getPassword().equals("")) updatedUser.setPassword(user.getPassword());
+            if (user.getFirstName() != null) updatedUser.setFirstName(user.getFirstName());
+            if (user.getLastName() != null) updatedUser.setLastName(user.getLastName());
+            if (user.getEmail() != null) updatedUser.setEmail(user.getEmail());
+            if (user.getPassword() != null) updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(updatedUser);
             System.out.println("Die Userdaten sollten auf ID " + updatedUser.getId() + " " + updatedUser.getFirstName() + " " + updatedUser.getLastName() + " " + updatedUser.getEmail() + " " + updatedUser.getPassword() + " geändert worden sein.");
             return updatedUser;
