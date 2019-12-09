@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import otc.be.controller.RestaurantController;
+import otc.be.dto.Picture;
 import otc.be.entity.Booking;
 import otc.be.entity.Restaurant;
 import otc.be.entity.RestaurantTable;
@@ -19,6 +21,8 @@ import otc.be.repository.UserRepository;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class OpenTableCloneApplication {
@@ -27,6 +31,8 @@ public class OpenTableCloneApplication {
     UserRepository userRepository;
     @Autowired
     RestaurantRepository restaurantRepository;
+    @Autowired
+    RestaurantController restaurantController;
     @Autowired
     RestaurantTableRepository restaurantTableRepository;
     @Autowired
@@ -44,6 +50,11 @@ public class OpenTableCloneApplication {
     @Bean
     CommandLineRunner runner() {
         return args -> {
+//            Restaurant restaurant = new Restaurant();
+//            Picture[] pictures = {new Picture("http://fakelink.com", "Fake Bild 1"), new Picture("www.fakeittillyoumakeit.com", "Fake Bild 2")};
+//            restaurant.setId(45);
+//            restaurant.setPictures(pictures);
+//            restaurantController.update(restaurant);
 //            userRepository.deleteAll();
 //            restaurantRepository.deleteAll();
 //            restaurantTableRepository.deleteAll();
