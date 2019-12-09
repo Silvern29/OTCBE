@@ -1,10 +1,15 @@
 package otc.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import otc.be.dto.Picture;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -41,7 +46,7 @@ public class Restaurant implements Serializable {
     private List<Booking> bookings;
 
     @Column(name = "pictures")
-    private Picture[] pictures;
+    private String pictures;
 
     //leerer Konstruktor (erforderlich)
     public Restaurant() {
@@ -151,11 +156,16 @@ public class Restaurant implements Serializable {
         this.bookings = bookings;
     }
 
-    public Picture[] getPictures() {
-        return pictures;
+    public List<Picture> getPictures() {
+        List<Picture> pictureList = new LinkedList<>();
+        Gson gson = new Gson();
+        Type listOfMyClassObject = new TypeToken<ArrayList<Picture>>() {
+        }.getType();
+        return gson.fromJson(this.pictures, listOfMyClassObject);
     }
 
-    public void setPictures(Picture[] pictures) {
-        this.pictures = pictures;
+    public void setPictures(List<Picture> pictures) {
+        Gson gson = new Gson();
+        this.pictures = gson.toJson(pictures);
     }
 }

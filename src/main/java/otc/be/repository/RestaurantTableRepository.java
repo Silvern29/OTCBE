@@ -21,5 +21,4 @@ public interface RestaurantTableRepository extends CrudRepository<RestaurantTabl
     LinkedList<Integer> getRestaurantTablesByPax(@Param("pax1") int pax1);
 
 
-
 }

@@ -1,17 +1,12 @@
 package otc.be.controller;
 
-import com.google.gson.Gson;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import otc.be.config.Utils;
-import otc.be.dto.Picture;
-import otc.be.dto.RestaurantDTO;
 import otc.be.entity.Restaurant;
 import otc.be.repository.RestaurantRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -28,7 +23,9 @@ public class RestaurantController {
         return restaurantRepository.findById(id);
     }
 
-    public Iterable<Restaurant> getRestaurantWithFragment(String fragment) {return restaurantRepository.findAllWithFragment(fragment);}
+    public Iterable<Restaurant> getRestaurantWithFragment(String fragment) {
+        return restaurantRepository.findAllWithFragment(fragment);
+    }
 
 
     public void create(Restaurant restaurant) {
@@ -52,7 +49,7 @@ public class RestaurantController {
 //    }
 
     public Restaurant update(Restaurant restaurant) {
-        if(restaurantRepository.findById(restaurant.getId()).isPresent()) {
+        if (restaurantRepository.findById(restaurant.getId()).isPresent()) {
             Restaurant newRestaurant = restaurantRepository.findById(restaurant.getId()).get();
             BeanUtils.copyProperties(restaurant, newRestaurant, Utils.getNullPropertyNames(restaurant));
             return restaurantRepository.save(newRestaurant);
@@ -60,14 +57,6 @@ public class RestaurantController {
             return null;
         }
     }
-
-//    public String addPictures(Restaurant restaurant, List<Picture> pictures) {
-//        RestaurantDTO restaurantDTO = new RestaurantDTO()
-//        Gson gson = new Gson();
-//        String jsonString = gson.toJson(pictures);
-//        restaurant.setPictures(pictures);
-//        return jsonString;
-//    }
 
     public void deleteById(Integer id) {
         System.out.println("Nun sollte das Restaurant mit der ID " + id + " gelöscht worden sein.");

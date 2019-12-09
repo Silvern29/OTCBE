@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class User  implements Serializable {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,8 @@ public class User  implements Serializable {
 
     @Column(name = "bookings")
     @JsonBackReference(value = "booking-user")
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = Booking.class) //ein User kann in viele Booking-Einträge involviert sein --> List
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = Booking.class)
+    //ein User kann in viele Booking-Einträge involviert sein --> List
     private List<Booking> bookings;
 
     //leerer Konstruktor erforderlich

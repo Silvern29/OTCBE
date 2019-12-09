@@ -1,7 +1,8 @@
 package otc.be.dto;
 
-import com.google.gson.Gson;
 import otc.be.entity.Restaurant;
+
+import java.util.List;
 
 public class RestaurantDTO {
     private int id;
@@ -12,7 +13,7 @@ public class RestaurantDTO {
     private String zip;
     private String city;
     private String info;
-    private String pictures;
+    private List<Picture> pictures;
 
     public RestaurantDTO(Restaurant restaurant) {
         this.name = restaurant.getName();
@@ -22,8 +23,7 @@ public class RestaurantDTO {
         this.zip = restaurant.getZip();
         this.city = restaurant.getCity();
         this.info = restaurant.getInfo();
-        Gson gson = new Gson();
-        this.pictures = gson.toJson(restaurant.getPictures());
+        this.pictures = restaurant.getPictures();
     }
 
     public int getId() {
@@ -90,11 +90,13 @@ public class RestaurantDTO {
         this.info = info;
     }
 
-    public String getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(String pictures) {
-        this.pictures = pictures;
-    }
+//    public String getPictures() {
+//        Gson gson = new Gson();
+//        this.pictures = gson.toJson(restaurant.getPictures());
+//        return pictures;
+//    }
+//
+//    public void setPictures(String pictures) {
+//        this.pictures = pictures;
+//    }
 }

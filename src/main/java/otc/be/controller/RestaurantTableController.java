@@ -78,7 +78,7 @@ public class RestaurantTableController {
             if (bookings.size() != 0) {
                 for (int i = 0; i < bookings.size(); i++) {
                     Date bookedDate = bookings.get(i).getDate();
-                    int bookedDay = bookedDate.getDay()+1;
+                    int bookedDay = bookedDate.getDay() + 1;
                     int bookedMonth = bookedDate.getMonth() + 1;
                     int bookedYear = bookedDate.getYear() + 1900;
                     Time bookedTime = bookings.get(i).getTime();

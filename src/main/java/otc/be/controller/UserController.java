@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import otc.be.dto.UserDTO;
-import otc.be.entity.User;
-import otc.be.exception.EmailExistsException;
 import otc.be.entity.Booking;
 import otc.be.entity.User;
+import otc.be.exception.EmailExistsException;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.UserRepository;
 

@@ -25,7 +25,7 @@ public class AuthorizationController {
     public AuthorizedUserDTO login(LoginDTO loginDTO) {
         if (repository.findByEmail(loginDTO.getEmail()) != null) {
             User currUser = repository.findByEmail(loginDTO.getEmail());
-            //Passwordencoder tries to match typed paassword with hashed password
+            //Passwordencoder tries to match typed password with hashed password
             if (passwordEncoder.matches(loginDTO.getPassword(), currUser.getPassword())) {
                 System.out.println("LOGGED IN");
                 String jws = Jwts.builder().setSubject(currUser.getFirstName()).signWith(key).compact();

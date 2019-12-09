@@ -11,7 +11,7 @@ import java.util.LinkedList;
 
 @CrossOrigin
 @RestController
-@RequestMapping(path="api")
+@RequestMapping(path = "api")
 public class AnfrageAPI {
 
     @Autowired

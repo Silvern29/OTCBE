@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import otc.be.entity.Anfrage;
 import otc.be.entity.RestaurantTable;
 import otc.be.repository.AnfrageRepository;
-import otc.be.repository.RestaurantRepository;
 import otc.be.repository.RestaurantTableRepository;
 
 import java.time.LocalDateTime;
@@ -54,9 +53,10 @@ public class AnfrageController {
                     System.out.println("Die aus der Schleife herausgegebene Anfrage lautet: Kann im Restaurant ID " + tempAnfrage.getId_restaurant() + " für " + tempAnfrage.getPersonenzahl() + " Personen  am " + ldtAnfrage.format(dtf) + " Uhr ein Tisch reserviert werden?");
                     Anfrage antwort = step2(tempAnfrage);
                     if (antwort.isBuchungMöglich()) {//wenn im Restaurant ein reservierbarer Tisch gefunden wurde, wird dieser der Antwortliste angehangen, ansonsten wird die Antwort verworfen.
-                    antwortliste.add(antwort);}
+                        antwortliste.add(antwort);
+                    }
                 }
-                if(antwortliste.size()==0){ //waren alle in Frage kommenden Tische reserviert
+                if (antwortliste.size() == 0) { //waren alle in Frage kommenden Tische reserviert
                     String meldung = "Alle in Frage kommenden Tische sind zur angefragten Zeit bereits gebucht.";
                     System.out.println(meldung);
                     anfrage.setBuchungMöglich(false);
