@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface RestaurantRepository extends CrudRepository<Restaurant, Integer> {
 
     Optional<Restaurant> findById(int id);
+
     Iterable<Restaurant> findByOrderByIdAsc();
 
     @Query(value = "SELECT * FROM restaurant where name LIKE %:fragment% OR city LIKE %:fragment% ORDER BY name, id", nativeQuery = true)

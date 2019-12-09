@@ -6,7 +6,6 @@ import otc.be.dto.BookingDTO;
 import otc.be.entity.Booking;
 import otc.be.entity.Restaurant;
 import otc.be.entity.RestaurantTable;
-import otc.be.exception.ForbiddenException;
 import otc.be.exception.NotLoggedInException;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.RestaurantRepository;
@@ -49,7 +48,7 @@ public class BookingController {
             throw new NotLoggedInException();
         }
     }
-            //Kontrolle, dass das mitgegebene Restaurant auch tatsächlich dem gebuchten Tisch entspricht
+    //Kontrolle, dass das mitgegebene Restaurant auch tatsächlich dem gebuchten Tisch entspricht
 //        Optional<RestaurantTable> tempRT = restaurantTableRepository.findById(booking.getRestaurantTable().getId());
 //        if (tempRT.isPresent()) {
 //            //lies daraus das eingetragene Restaurant aus
@@ -90,7 +89,7 @@ public class BookingController {
     }
 
     public void deleteById(Integer id) {
-        System.out.println("Nun sollte das Restaurant mit der ID " + id + " gelöscht worden sein.");
+        System.out.println("Nun sollte die Buchung mit der ID " + id + " gelöscht worden sein.");
         bookingRepository.deleteById(id);
     }
 }

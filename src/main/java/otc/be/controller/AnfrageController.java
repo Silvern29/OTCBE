@@ -55,7 +55,7 @@ public class AnfrageController {
                     if (antwort.isBuchungMoeglich()) {//wenn im Restaurant ein reservierbarer Tisch gefunden wurde, wird dieser der Antwortliste angehangen, ansonsten wird die Antwort verworfen.
                     antwortliste.add(antwort);}
                 }
-                if(antwortliste.size()==0){ //waren alle in Frage kommenden Tische reserviert
+                if (antwortliste.size() == 0) { //waren alle in Frage kommenden Tische reserviert
                     String meldung = "Alle in Frage kommenden Tische sind zur angefragten Zeit bereits gebucht.";
                     System.out.println(meldung);
                     anfrage.setBuchungMoeglich(false);

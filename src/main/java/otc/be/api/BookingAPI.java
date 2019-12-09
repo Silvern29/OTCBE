@@ -5,9 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import otc.be.controller.AuthorizationController;
 import otc.be.controller.BookingController;
-import otc.be.controller.UserController;
 import otc.be.dto.BookingDTO;
 import otc.be.entity.Booking;
 
@@ -15,7 +13,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping(path="api")
+@RequestMapping(path = "api")
 public class BookingAPI {
 
     @Autowired

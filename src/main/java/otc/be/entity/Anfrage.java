@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 @Entity
-public class Anfrage  implements Serializable {
+public class Anfrage implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

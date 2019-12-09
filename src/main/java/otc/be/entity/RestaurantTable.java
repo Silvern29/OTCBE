@@ -9,8 +9,9 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id") //ersetzt JsonManagedReference
-public class RestaurantTable  implements Serializable {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//ersetzt JsonManagedReference
+public class RestaurantTable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class RestaurantTable  implements Serializable {
     private int pax;
 
     //ein Tisch ist genau einem Restaurant zugeordnet
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_restaurant")
     //@JsonManagedReference(value = "table-restaurant")
     //, insertable = false, updatable = false, nullable = false) auskommentiert, wenn es drin ist, geht das Anlegen der Tische mit der Restaurant-ID nicht
