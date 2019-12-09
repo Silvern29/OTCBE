@@ -19,13 +19,13 @@ public class Anfrage  implements Serializable {
     private Time uhrzeit;
     private int personenzahl;
     private int id_table;
-    private boolean buchungMöglich;
+    private boolean buchungMoeglich;
     private String bemerkung;
 
     public Anfrage() {
     }
 
-    public Anfrage(int id, int id_restaurant, int id_user, Date datum, Time uhrzeit, int personenzahl, int id_table, boolean buchungMöglich, String bemerkung) {
+    public Anfrage(int id, int id_restaurant, int id_user, Date datum, Time uhrzeit, int personenzahl, int id_table, boolean buchungMoeglich, String bemerkung) {
         this.id = id;
         this.id_restaurant = id_restaurant;
         this.id_user = id_user;
@@ -33,7 +33,7 @@ public class Anfrage  implements Serializable {
         this.uhrzeit = uhrzeit;
         this.personenzahl = personenzahl;
         this.id_table = id_table;
-        this.buchungMöglich = buchungMöglich;
+        this.buchungMoeglich = buchungMoeglich;
         this.bemerkung = bemerkung;
     }
 
@@ -93,12 +93,12 @@ public class Anfrage  implements Serializable {
         this.id_table = id_table;
     }
 
-    public boolean isBuchungMöglich() {
-        return buchungMöglich;
+    public boolean isBuchungMoeglich() {
+        return buchungMoeglich;
     }
 
-    public void setBuchungMöglich(boolean buchungMöglich) {
-        this.buchungMöglich = buchungMöglich;
+    public void setBuchungMoeglich(boolean buchungMoeglich) {
+        this.buchungMoeglich = buchungMoeglich;
     }
 
     public String getBemerkung() {
