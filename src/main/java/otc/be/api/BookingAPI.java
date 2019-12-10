@@ -40,9 +40,8 @@ public class BookingAPI {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/bookings")
-    public Booking update(@RequestBody Booking booking) {
-        bookingController.update(booking);
-        return booking;
+    public Booking update(@RequestBody BookingDTO bookingDTO) {
+        return bookingController.update(bookingDTO);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/bookings/{id}")

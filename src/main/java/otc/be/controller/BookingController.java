@@ -1,7 +1,9 @@
 package otc.be.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import otc.be.config.Utils;
 import otc.be.dto.BookingDTO;
 import otc.be.entity.Booking;
 import otc.be.entity.Restaurant;
@@ -62,34 +64,20 @@ public class BookingController {
         }
     }
 
-    public Booking update(Booking booking) {
-        Booking updatedBooking = bookingRepository.findById(booking.getId()).get();
-        //ist ein Datum eingegeben? -> weicht das in der DB hinterlegte Buchungsdatum vom eingegebenen Buchungsdatum ab, dann schreibe das eingegebene Datum im nächsten Schritt in die DB
-        if ((booking.getDate() != null) && (booking.getDate() != updatedBooking.getDate()))
-            updatedBooking.setDate(booking.getDate());
-        //ist eine Uhrzeit eingegeben? -> weicht die in der DB hinterlegte Uhrzeit von der eingegebenen Uhrzeit ab, dann schreibe die eingegebene Uhrzeit im nächsten Schritt in die DB
-        if ((booking.getTime() != null) && (booking.getTime() != updatedBooking.getTime()))
-            updatedBooking.setTime(booking.getTime());
-        //ist ein User eingegeben? -> weicht der in der DB hinterlegte User vom eingegebenen User ab, dann schreibe den eingegebenen User im nächsten Schritt in die DB
-        if ((booking.getUser().getId() != 0) && (booking.getUser().getId() != updatedBooking.getUser().getId()))
-            updatedBooking.setUser(booking.getUser());
-        //ist ein Tisch eingegeben? -> weicht der in der DB hinterlegte Tisch vom eingegebenen Tisch ab, dann schreibe den eingegebenen Tisch im nächsten Schritt in die DB
-        if ((booking.getRestaurantTable().getId() != 0) && (updatedBooking.getRestaurantTable().getId() != booking.getRestaurantTable().getId())) {
-            updatedBooking.setRestaurantTable(booking.getRestaurantTable());
-            //lies aus der DB den Eintrag für den eingegebenen, mit der ID erwähnten Tisch aus
-            Optional<RestaurantTable> tempRT = restaurantTableRepository.findById(booking.getRestaurantTable().getId());
-            if (tempRT.isPresent()) {
-                //lies daraus das eingetragene Restaurant aus
-                Restaurant tempR = tempRT.get().getRestaurant();
-                //schreibe das zur eingegebenen TischID zugehörige Restaurant im nächsten Schritt in die DB
-                updatedBooking.setRestaurant(tempR);
-            }
-        }
-        //ist ein Restaurant eingegeben - würde ich weglassen, da beim Eintrag des Restaurants ohnehin geschaut wird, dass das laut Tisch-ID hinterlegte Restaurant in der DB gespeichert wird.
+    public Booking update(BookingDTO bookingDTO) {
+        Booking updatedBooking = bookingRepository.findById(bookingDTO.getId()).get();
+        //ist ein Datum eingegeben?
+        if (bookingDTO.getDate() != null) updatedBooking.setDate(bookingDTO.getDate());
+        //ist eine Uhrzeit eingegeben?
+        if (bookingDTO.getTime() != null) updatedBooking.setTime(bookingDTO.getTime());
+        //ist ein User eingegeben?
+        if (bookingDTO.getUserId() > 0) updatedBooking.setUser(userRepository.findById(bookingDTO.getUserId()).get());
+        //ist ein Tisch eingegeben?
+        if (bookingDTO.getTableId() > 0) updatedBooking.setRestaurantTable(restaurantTableRepository.findById(bookingDTO.getTableId()).get());
+        if (bookingDTO.getRestaurantId() > 0) updatedBooking.setRestaurant(restaurantRepository.findById(bookingDTO.getRestaurantId()).get());
+        if (bookingDTO.getPax() > 0) updatedBooking.setPax(bookingDTO.getPax());
         //Schreiben in die DB
-        bookingRepository.save(updatedBooking);
-        System.out.println("Die Änderung der Buchung sollte erfasst sein.");
-        return updatedBooking;
+        return bookingRepository.save(updatedBooking);
     }
 
     public void deleteById(Integer id) {

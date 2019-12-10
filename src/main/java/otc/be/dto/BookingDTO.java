@@ -4,11 +4,12 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class BookingDTO {
-    private int pax;
-    private int userId;
+    private int id;
+    private int pax = -1;
+    private int userId = -1;
     private String jws;
-    private int restaurantId;
-    private int tableId;
+    private int restaurantId = -1;
+    private int tableId = -1;
     private Date date;
     private Time time;
 
@@ -23,6 +24,25 @@ public class BookingDTO {
         this.tableId = tableId;
         this.date = date;
         this.time = time;
+    }
+
+    public BookingDTO(int id, int pax, int userId, String jws, int restaurantId, int tableId, Date date, Time time) {
+        this.id = id;
+        this.pax = pax;
+        this.userId = userId;
+        this.jws = jws;
+        this.restaurantId = restaurantId;
+        this.tableId = tableId;
+        this.date = date;
+        this.time = time;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPax() {
