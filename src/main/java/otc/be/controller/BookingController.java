@@ -57,6 +57,7 @@ public class BookingController {
             booking.setRestaurant(restaurantRepository.findById(bookingDTO.getRestaurantId()).get());
             booking.setRestaurantTable(restaurantTableRepository.findById(bookingDTO.getTableId()).get());
             booking.setDate(bookingDTO.getDate());
+            booking.setTime(bookingDTO.getTime());
             bookingRepository.save(booking);
             return booking;
         } else {
