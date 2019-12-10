@@ -16,6 +16,7 @@ public class Booking implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    private int pax;
 
     //eine Buchung ist genau einem Kunden zugeordnet
     //@JsonManagedReference(value = "booking-user")
@@ -45,7 +46,8 @@ public class Booking implements Serializable {
     public Booking() {
     }
 
-    public Booking(User user, Restaurant restaurant, RestaurantTable restaurantTable, Date date) {
+    public Booking(int pax, User user, Restaurant restaurant, RestaurantTable restaurantTable, Date date) {
+        this.pax = pax;
         this.user = user;
         this.restaurant = restaurant;
         this.restaurantTable = restaurantTable;
@@ -58,6 +60,14 @@ public class Booking implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getPax() {
+        return pax;
+    }
+
+    public void setPax(int pax) {
+        this.pax = pax;
     }
 
     public User getUser() {

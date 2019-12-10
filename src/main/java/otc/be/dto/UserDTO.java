@@ -2,11 +2,8 @@ package otc.be.dto;
 
 public class UserDTO {
     private String firstName;
-
     private String lastName;
-
     private String password;
-
     private String email;
 
     public String getFirstName() {

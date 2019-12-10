@@ -18,4 +18,7 @@ public interface BookingRepository extends CrudRepository<Booking, Integer> {
 
     @Query(value = "SELECT * FROM booking where id_user=?1 AND ((date > ?2) OR ((date = ?2) AND (time > ?3)))", nativeQuery = true)
     LinkedList<Booking> getListAllBookingsinFuture(@Param("id") Integer id, @Param("datum") Date datum, @Param("uhrzeit") Time uhrzeit);
+
+    @Query(value = "SELECT * FROM booking where id_restaurant=?1 AND ((date > ?2))", nativeQuery = true)
+    LinkedList<Booking> getFutureBookingsByRestaurant(@Param("id") Integer id, @Param("datum") Date datum);
 }

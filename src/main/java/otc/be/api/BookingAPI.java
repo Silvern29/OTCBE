@@ -24,14 +24,19 @@ public class BookingAPI {
         return bookingController.getAllBookings();
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/restaurants/{id}/bookings", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<Booking> getListAll(@PathVariable int id) {
+        return bookingController.getFutureBookingsByResId(id);
+    }
+
     @RequestMapping(method = RequestMethod.GET, path = "/bookings/{id}")
     public Optional<Booking> getBookingById(@PathVariable("id") Integer id) {
         return bookingController.getBookingById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/bookings", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody BookingDTO bookingDTO) {
-        bookingController.create(bookingDTO);
+    public Booking create(@RequestBody BookingDTO bookingDTO) {
+        return bookingController.create(bookingDTO);
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/bookings")

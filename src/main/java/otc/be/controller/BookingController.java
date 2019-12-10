@@ -6,12 +6,18 @@ import otc.be.dto.BookingDTO;
 import otc.be.entity.Booking;
 import otc.be.entity.Restaurant;
 import otc.be.entity.RestaurantTable;
+import otc.be.entity.User;
 import otc.be.exception.NotLoggedInException;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.RestaurantRepository;
 import otc.be.repository.RestaurantTableRepository;
 import otc.be.repository.UserRepository;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.Optional;
 
 @Controller
@@ -32,31 +38,29 @@ public class BookingController {
         return bookingRepository.findByOrderByIdAsc();
     }
 
+    public Iterable<Booking> getFutureBookingsByResId(int id) {
+        Date datum = Date.valueOf(LocalDate.now());
+        return bookingRepository.getFutureBookingsByRestaurant(id, datum);
+    }
+
     public Optional<Booking> getBookingById(Integer id) {
         return bookingRepository.findById(id);
     }
 
-    public void create(BookingDTO bookingDTO) {
-        if (authorizationController.isAuthorized(bookingDTO.getUserDTO().getJws())) {
+    public Booking create(BookingDTO bookingDTO) {
+        if (authorizationController.isAuthorized(bookingDTO.getJws())) {
             Booking booking = new Booking();
-            booking.setUser(userRepository.findByEmail(bookingDTO.getUserDTO().getEmail()));
+            booking.setPax(bookingDTO.getPax());
+            booking.setUser(userRepository.findById(bookingDTO.getUserId()).get());
             booking.setRestaurant(restaurantRepository.findById(bookingDTO.getRestaurantId()).get());
             booking.setRestaurantTable(restaurantTableRepository.findById(bookingDTO.getTableId()).get());
             booking.setDate(bookingDTO.getDate());
             bookingRepository.save(booking);
+            return booking;
         } else {
             throw new NotLoggedInException();
         }
     }
-    //Kontrolle, dass das mitgegebene Restaurant auch tatsächlich dem gebuchten Tisch entspricht
-//        Optional<RestaurantTable> tempRT = restaurantTableRepository.findById(booking.getRestaurantTable().getId());
-//        if (tempRT.isPresent()) {
-//            //lies daraus das eingetragene Restaurant aus
-//            Restaurant tempR = tempRT.get().getRestaurant();
-//            //schreibe das zur eingegebenen TischID zugehörige Restaurant im nächsten Schritt in die DB
-//            booking.setRestaurant(tempR);
-//        }
-//        System.out.println("Jetzt sollte eine neue Buchung in der Tabelle Booking eingetragen worden sein.");
 
     public Booking update(Booking booking) {
         Booking updatedBooking = bookingRepository.findById(booking.getId()).get();
