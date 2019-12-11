@@ -1,14 +1,9 @@
 package otc.be.controller;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import otc.be.config.Utils;
 import otc.be.dto.BookingDTO;
 import otc.be.entity.Booking;
-import otc.be.entity.Restaurant;
-import otc.be.entity.RestaurantTable;
-import otc.be.entity.User;
 import otc.be.exception.NotLoggedInException;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.RestaurantRepository;
@@ -16,10 +11,7 @@ import otc.be.repository.RestaurantTableRepository;
 import otc.be.repository.UserRepository;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.LinkedList;
 import java.util.Optional;
 
 @Controller
@@ -35,14 +27,20 @@ public class BookingController {
     private RestaurantTableRepository restaurantTableRepository;
     @Autowired
     private AuthorizationController authorizationController;
+    @Autowired
+    private AdminController adminController;
 
     public Iterable<Booking> getAllBookings() {
         return bookingRepository.findByOrderByIdAsc();
     }
 
-    public Iterable<Booking> getFutureBookingsByResId(int id) {
-        Date datum = Date.valueOf(LocalDate.now());
-        return bookingRepository.getFutureBookingsByRestaurant(id, datum);
+    public Iterable<Booking> getFutureBookingsByResId(int id, String jws) {
+        if (adminController.isAuthorized(jws)) {
+            Date datum = Date.valueOf(LocalDate.now());
+            return bookingRepository.getFutureBookingsByRestaurant(id, datum);
+        } else {
+            throw new NotLoggedInException();
+        }
     }
 
     public Optional<Booking> getBookingById(Integer id) {
@@ -50,7 +48,7 @@ public class BookingController {
     }
 
     public Booking create(BookingDTO bookingDTO) {
-        if (authorizationController.isAuthorized(bookingDTO.getJws())) {
+        if (authorizationController.isAuthorized(bookingDTO.getJws()) || adminController.isAuthorized(bookingDTO.getJws())) {
             Booking booking = new Booking();
             booking.setPax(bookingDTO.getPax());
             booking.setUser(userRepository.findById(bookingDTO.getUserId()).get());
@@ -66,19 +64,26 @@ public class BookingController {
     }
 
     public Booking update(BookingDTO bookingDTO) {
-        Booking updatedBooking = bookingRepository.findById(bookingDTO.getId()).get();
-        //ist ein Datum eingegeben?
-        if (bookingDTO.getDate() != null) updatedBooking.setDate(bookingDTO.getDate());
-        //ist eine Uhrzeit eingegeben?
-        if (bookingDTO.getTime() != null) updatedBooking.setTime(bookingDTO.getTime());
-        //ist ein User eingegeben?
-        if (bookingDTO.getUserId() > 0) updatedBooking.setUser(userRepository.findById(bookingDTO.getUserId()).get());
-        //ist ein Tisch eingegeben?
-        if (bookingDTO.getTableId() > 0) updatedBooking.setRestaurantTable(restaurantTableRepository.findById(bookingDTO.getTableId()).get());
-        if (bookingDTO.getRestaurantId() > 0) updatedBooking.setRestaurant(restaurantRepository.findById(bookingDTO.getRestaurantId()).get());
-        if (bookingDTO.getPax() > 0) updatedBooking.setPax(bookingDTO.getPax());
-        //Schreiben in die DB
-        return bookingRepository.save(updatedBooking);
+        if (adminController.isAuthorized(bookingDTO.getJws())) {
+            Booking updatedBooking = bookingRepository.findById(bookingDTO.getId()).get();
+            //ist ein Datum eingegeben?
+            if (bookingDTO.getDate() != null) updatedBooking.setDate(bookingDTO.getDate());
+            //ist eine Uhrzeit eingegeben?
+            if (bookingDTO.getTime() != null) updatedBooking.setTime(bookingDTO.getTime());
+            //ist ein User eingegeben?
+            if (bookingDTO.getUserId() > 0)
+                updatedBooking.setUser(userRepository.findById(bookingDTO.getUserId()).get());
+            //ist ein Tisch eingegeben?
+            if (bookingDTO.getTableId() > 0)
+                updatedBooking.setRestaurantTable(restaurantTableRepository.findById(bookingDTO.getTableId()).get());
+            if (bookingDTO.getRestaurantId() > 0)
+                updatedBooking.setRestaurant(restaurantRepository.findById(bookingDTO.getRestaurantId()).get());
+            if (bookingDTO.getPax() > 0) updatedBooking.setPax(bookingDTO.getPax());
+            //Schreiben in die DB
+            return bookingRepository.save(updatedBooking);
+        } else {
+            throw new NotLoggedInException();
+        }
     }
 
     public void deleteById(Integer id) {

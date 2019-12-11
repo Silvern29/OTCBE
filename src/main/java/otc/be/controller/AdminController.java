@@ -48,12 +48,22 @@ public class AdminController {
                 System.out.println("LOGGED IN");
                 String jws = Jwts.builder().setSubject(currAdmin.getRestaurant().getName()).signWith(key).compact();
                 currAdmin.setJws(jws);
+                System.out.println(jws);
                 return currAdmin;
             } else {
                 throw new ForbiddenException();
             }
         } else {
             throw new ForbiddenException();
+        }
+    }
+
+    public boolean isAuthorized(String token) {
+        try {
+            String result = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }

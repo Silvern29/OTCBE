@@ -8,10 +8,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import otc.be.controller.RestaurantController;
+import otc.be.entity.Booking;
+import otc.be.entity.Restaurant;
+import otc.be.entity.RestaurantTable;
+import otc.be.entity.User;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.RestaurantRepository;
 import otc.be.repository.RestaurantTableRepository;
 import otc.be.repository.UserRepository;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalTime;
 
 @SpringBootApplication
 public class OpenTableCloneApplication {
@@ -39,15 +47,11 @@ public class OpenTableCloneApplication {
     @Bean
     CommandLineRunner runner() {
         return args -> {
-//            Restaurant restaurant = new Restaurant();
-//            restaurant.setId(45);
-//            restaurant.setPictures(pictures);
-//            restaurantController.update(restaurant);
 //            userRepository.deleteAll();
 //            restaurantRepository.deleteAll();
 //            restaurantTableRepository.deleteAll();
 //            bookingRepository.deleteAll();
-
+//
 //            User u1 = new User("Anton", "Ameise", "anton.ameise@aol.at", "abcdef");
 //            User u2 = new User("Bernd", "Bande", "bernd.bande@gmx.at", "aaaaaa");
 //            User u3 = new User("Clara", "Chor", "clara.chor@drei.at", "1111");
@@ -61,7 +65,7 @@ public class OpenTableCloneApplication {
 //            restaurantRepository.save(r1);
 //            restaurantRepository.save(r2);
 //            restaurantRepository.save(r3);
-
+//
 //            Restaurant or = restaurantRepository.findById(45).get(); //or = Optional<Restaurant> = Rückgabeformat von findById()
 //            System.out.println(or.getId() + " " + or.getName());
 //            RestaurantTable t1 = new RestaurantTable(1, 4, or);
@@ -127,7 +131,7 @@ public class OpenTableCloneApplication {
 //            restaurantTableRepository.save(t8);
 //            restaurantTableRepository.save(t9);
 //            restaurantTableRepository.save(t10);
-
+//
 //            User bu1 = userRepository.findById(41).get(); //User mit ID für die zu erstellende Buchung auslesen
 //            RestaurantTable brt1 = restaurantTableRepository.findById(34).get(); // Tisch mit ID für die zu erstellende Buchung auslesen
 //            Restaurant br1 = brt1.getRestaurant();

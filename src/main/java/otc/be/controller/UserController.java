@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import otc.be.dto.UserDTO;
+import otc.be.entity.Booking;
 import otc.be.entity.User;
 import otc.be.exception.EmailExistsException;
-import otc.be.entity.Booking;
 import otc.be.exception.NoBookingsException;
 import otc.be.exception.NoUserException;
+import otc.be.exception.NotLoggedInException;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.UserRepository;
 
@@ -23,6 +24,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthorizationController authorizationController;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -163,18 +166,22 @@ public class UserController {
 //        return allBookings;
 //    }
 
-    public LinkedList<Booking> allBookingsInFuture(int id) throws NoUserException, NoBookingsException {
-        if (userRepository.findById(id).isPresent()) {
-            Date datum = Date.valueOf(LocalDate.now());
-            Time uhrzeit = Time.valueOf(LocalTime.now());
-            LinkedList<Booking> allBookings = bookingRepository.getListAllBookingsinFuture(id, datum, uhrzeit);
-            if (allBookings.size() > 0) {
-                return allBookings;
+    public LinkedList<Booking> allBookingsInFuture(int id, String jws) {
+        if (authorizationController.isAuthorized(jws)) {
+            if (userRepository.findById(id).isPresent()) {
+                Date datum = Date.valueOf(LocalDate.now());
+                Time uhrzeit = Time.valueOf(LocalTime.now());
+                LinkedList<Booking> allBookings = bookingRepository.getListAllBookingsinFuture(id, datum, uhrzeit);
+                if (allBookings.size() > 0) {
+                    return allBookings;
+                } else {
+                    throw new NoBookingsException("No bookings found for user");
+                }
             } else {
-                throw new NoBookingsException("No bookings found for user");
+                throw new NoUserException("User not found");
             }
         } else {
-            throw new NoUserException("User not found");
+            throw new NotLoggedInException();
         }
     }
 }

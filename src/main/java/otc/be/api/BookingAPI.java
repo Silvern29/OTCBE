@@ -24,9 +24,9 @@ public class BookingAPI {
         return bookingController.getAllBookings();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/restaurants/{id}/bookings", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Iterable<Booking> getListAll(@PathVariable int id) {
-        return bookingController.getFutureBookingsByResId(id);
+    @RequestMapping(method = RequestMethod.GET, path = "/restaurants/{id}/bookings/{jws}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<Booking> getListAll(@PathVariable int id, @PathVariable String jws) {
+        return bookingController.getFutureBookingsByResId(id, jws);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/bookings/{id}")
