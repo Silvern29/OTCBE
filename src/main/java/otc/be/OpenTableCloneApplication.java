@@ -40,7 +40,6 @@ public class OpenTableCloneApplication {
     CommandLineRunner runner() {
         return args -> {
 //            Restaurant restaurant = new Restaurant();
-//            Picture[] pictures = {new Picture("http://fakelink.com", "Fake Bild 1"), new Picture("www.fakeittillyoumakeit.com", "Fake Bild 2")};
 //            restaurant.setId(45);
 //            restaurant.setPictures(pictures);
 //            restaurantController.update(restaurant);

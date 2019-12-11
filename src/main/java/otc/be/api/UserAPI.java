@@ -13,6 +13,8 @@ import otc.be.dto.UserDTO;
 import otc.be.entity.Booking;
 import otc.be.entity.User;
 import otc.be.exception.EmailExistsException;
+import otc.be.exception.NoBookingsException;
+import otc.be.exception.NoUserException;
 
 import java.util.LinkedList;
 
@@ -73,8 +75,7 @@ public class UserAPI {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/users/allBookingsInFuture/{id}")
-    public LinkedList<Booking> allBookingsInFuture(@PathVariable("id") Integer id) {
-        LinkedList allBookings = userController.allBookingsInFuture(id);
-        return allBookings;
+    public LinkedList<Booking> allBookingsInFuture(@PathVariable("id") Integer id) throws NoUserException, NoBookingsException {
+        return userController.allBookingsInFuture(id);
     }
 }

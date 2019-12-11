@@ -7,16 +7,15 @@ import otc.be.dto.UserDTO;
 import otc.be.entity.User;
 import otc.be.exception.EmailExistsException;
 import otc.be.entity.Booking;
-import otc.be.entity.User;
+import otc.be.exception.NoBookingsException;
+import otc.be.exception.NoUserException;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.UserRepository;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -123,45 +122,59 @@ public class UserController {
 //        }
 //    }
 
-    public LinkedList<Booking> allBookingsInFuture(Integer id) { //user-id prüfen
-        Optional<User> optionalCurrentUser = userRepository.findById(id);
-        LinkedList<Booking> allBookings = new LinkedList<>();
-        if (optionalCurrentUser.isPresent()) {
+//    public LinkedList<Booking> allBookingsInFuture(Integer id) { //user-id prüfen
+//        Optional<User> optionalCurrentUser = userRepository.findById(id);
+//        LinkedList<Booking> allBookings = new LinkedList<>();
+//        if (optionalCurrentUser.isPresent()) {
+//            Date datum = Date.valueOf(LocalDate.now());
+//            Time uhrzeit = Time.valueOf(LocalTime.now());
+//            allBookings = bookingRepository.getListAllBookingsinFuture(id, datum, uhrzeit);
+//            if (allBookings.size() == 0) {
+//                String meldung = "Für den User " + id + " wurden keine in Zukunft liegenden Buchungen gefunden";
+//                System.out.println(meldung);
+//                User tempUser = new User();
+//                tempUser.setFirstName(meldung);
+//                Booking tempBooking = new Booking();
+//                tempBooking.setUser(tempUser);
+//                allBookings.add(tempBooking);
+//            } else {
+//                //zu Entwicklungszwecken
+//                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy /  HH:mm");
+//                for (int i = 0; i < allBookings.size(); i++) {
+//                    Booking temp = allBookings.get(i); //für vereinfachte Ausgabe
+//                    int anfrageTag = temp.getDate().getDay() + 1;
+//                    int anfrageMonat = temp.getDate().getMonth() + 1;
+//                    int anfrageJahr = temp.getDate().getYear() + 1900;
+//                    int anfrageStunde = temp.getTime().getHours();
+//                    int anfrageMinute = temp.getTime().getMinutes();
+//                    LocalDateTime ldtBuchung = LocalDateTime.of(anfrageJahr, anfrageMonat, anfrageTag, anfrageStunde, anfrageMinute);
+//                    System.out.println("Booking-ID: " + temp.getId() + ", User-ID: " + temp.getUser() + ", Rest-ID: " + temp.getRestaurant().getId() + " " + temp.getRestaurant().getName() + ", Tisch-ID: " + temp.getRestaurantTable().getId() + " am " + ldtBuchung.format(dtf));
+//                }
+//            }
+//        } else {
+//            String meldung = "Es gibt keinen User mit der ID " + id;
+//            System.out.println(meldung);
+//            User tempUser = new User();
+//            tempUser.setFirstName(meldung);
+//            Booking tempBooking = new Booking();
+//            tempBooking.setUser(tempUser);
+//            allBookings.add(tempBooking);
+//        }
+//        return allBookings;
+//    }
+
+    public LinkedList<Booking> allBookingsInFuture(int id) throws NoUserException, NoBookingsException {
+        if (userRepository.findById(id).isPresent()) {
             Date datum = Date.valueOf(LocalDate.now());
             Time uhrzeit = Time.valueOf(LocalTime.now());
-            System.out.println("Zu Kontrollzwecken: " + datum + " " + uhrzeit);
-            allBookings = bookingRepository.getListAllBookingsinFuture(id, datum, uhrzeit);
-            if (allBookings.size() == 0) {
-                String meldung = "Für den User " + id + " wurden keine in Zukunft liegenden Buchungen gefunden";
-                System.out.println(meldung);
-                User tempUser = new User();
-                tempUser.setFirstName(meldung);
-                Booking tempBooking = new Booking();
-                tempBooking.setUser(tempUser);
-                allBookings.add(tempBooking);
+            LinkedList<Booking> allBookings = bookingRepository.getListAllBookingsinFuture(id, datum, uhrzeit);
+            if (allBookings.size() > 0) {
+                return allBookings;
             } else {
-                //zu Entwicklungszwecken
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy /  HH:mm");
-                for (int i = 0; i < allBookings.size(); i++) {
-                    Booking temp = allBookings.get(i); //für vereinfachte Ausgabe
-                    int anfrageTag = temp.getDate().getDay() + 1;
-                    int anfrageMonat = temp.getDate().getMonth() + 1;
-                    int anfrageJahr = temp.getDate().getYear() + 1900;
-                    int anfrageStunde = temp.getTime().getHours();
-                    int anfrageMinute = temp.getTime().getMinutes();
-                    LocalDateTime ldtBuchung = LocalDateTime.of(anfrageJahr, anfrageMonat, anfrageTag, anfrageStunde, anfrageMinute);
-                    System.out.println("Booking-ID: " + temp.getId() + ", User-ID: " + temp.getUser() + ", Rest-ID: " + temp.getRestaurant().getId() + " " + temp.getRestaurant().getName() + ", Tisch-ID: " + temp.getRestaurantTable().getId() + " am " + ldtBuchung.format(dtf));
-                }
+                throw new NoBookingsException("No bookings found for user");
             }
         } else {
-            String meldung = "Es gibt keinen User mit der ID " + id;
-            System.out.println(meldung);
-            User tempUser = new User();
-            tempUser.setFirstName(meldung);
-            Booking tempBooking = new Booking();
-            tempBooking.setUser(tempUser);
-            allBookings.add(tempBooking);
+            throw new NoUserException("User not found");
         }
-        return allBookings;
     }
 }
