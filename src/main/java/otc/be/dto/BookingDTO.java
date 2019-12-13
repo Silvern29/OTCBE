@@ -2,6 +2,7 @@ package otc.be.dto;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 
 public class BookingDTO {
     private int id;
@@ -10,8 +11,9 @@ public class BookingDTO {
     private String jws;
     private int restaurantId = -1;
     private int tableId = -1;
-    private Date date;
-    private Time time;
+    private LocalDateTime localDateTime;
+//    private Date date;
+//    private Time time;
 
     public BookingDTO() {
     }
@@ -22,8 +24,9 @@ public class BookingDTO {
         this.jws = jws;
         this.restaurantId = restaurantId;
         this.tableId = tableId;
-        this.date = date;
-        this.time = time;
+//        this.date = date;
+//        this.time = time;
+        this.localDateTime = date.toLocalDate().atTime(time.toLocalTime());
     }
 
     public BookingDTO(int id, int pax, int userId, String jws, int restaurantId, int tableId, Date date, Time time) {
@@ -33,8 +36,9 @@ public class BookingDTO {
         this.jws = jws;
         this.restaurantId = restaurantId;
         this.tableId = tableId;
-        this.date = date;
-        this.time = time;
+//        this.date = date;
+//        this.time = time;
+        this.localDateTime = date.toLocalDate().atTime(time.toLocalTime());
     }
 
     public int getId() {
@@ -85,19 +89,28 @@ public class BookingDTO {
         this.tableId = tableId;
     }
 
-    public Date getDate() {
-        return date;
+//    public Date getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(Date date) {
+//        this.date = date;
+//    }
+//
+//    public Time getTime() {
+//        return time;
+//    }
+//
+//    public void setTime(Time time) {
+//        this.time = time;
+//    }
+
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }

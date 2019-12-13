@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDateTime;
+//import java.sql.Date;
+//import java.sql.Time;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -39,21 +40,24 @@ public class Booking implements Serializable {
     private RestaurantTable restaurantTable;
 
     //@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss") //als Anotation für Date - so einfach kanns gehen
-    @Column(name = "date")
-    private Date date;
-    @Column(name = "time")
-    private Time time;
+    @Column(name = "localDateTime")
+    private LocalDateTime localDateTime;
+
+//    @Column(name = "date")
+//    private Date date;
+//    @Column(name = "time")
+//    private Time time;
 
     //leerer Konstruktor erforderlich
     public Booking() {
     }
 
-    public Booking(int pax, User user, Restaurant restaurant, RestaurantTable restaurantTable, Date date) {
+    public Booking(int pax, User user, Restaurant restaurant, RestaurantTable restaurantTable, LocalDateTime localDateTime) {
         this.pax = pax;
         this.user = user;
         this.restaurant = restaurant;
         this.restaurantTable = restaurantTable;
-        this.date = date;
+        this.localDateTime = localDateTime;
     }
 
     public int getId() {
@@ -96,19 +100,28 @@ public class Booking implements Serializable {
         this.restaurantTable = restaurantTable;
     }
 
-    public Date getDate() {
-        return date;
+//    public Date getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(Date date) {
+//        this.date = date;
+//    }
+//
+//    public Time getTime() {
+//        return time;
+//    }
+//
+//    public void setTime(Time time) {
+//        this.time = time;
+//    }
+
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }
