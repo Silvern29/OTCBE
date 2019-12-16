@@ -38,15 +38,17 @@ public class RestaurantController {
 
     public boolean isOpen(LocalDateTime ldt, Restaurant restaurant){
         List<OpeningTime> matchingDays = new LinkedList<>();
-        for (OpeningTime openingTime : restaurant.getOpeningHours()){
+        restaurant.getOpeningHours().forEach(openingTime -> {
             if (ldt.getDayOfWeek().equals(openingTime.getDayOfWeek())){
                 matchingDays.add(openingTime);
             }
-        }
-        for (OpeningTime openingTime : restaurant.getOpeningHours()) {
-
-        }
-        return true;
+        });
+        matchingDays.forEach(openingTime -> {
+            if(!(ldt.toLocalTime().isAfter(openingTime.getOpening()) && ldt.toLocalTime().isBefore(openingTime.getClosing()))) {
+                matchingDays.remove(openingTime);
+            }
+        });
+        return matchingDays.size() > 0;
     }
 
 //    public Restaurant update(Restaurant restaurant) {

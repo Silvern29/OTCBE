@@ -17,32 +17,37 @@ public class AnfrageController {
     private RestaurantTableRepository restaurantTableRepository;
     @Autowired
     private RestaurantTableController restaurantTableController;
+    @Autowired
+    private RestaurantController restaurantController;
 
     public LinkedList<AnfrageDTO> buildList(AnfrageDTO anfrageDTO) {
         LinkedList<AnfrageDTO> antwortliste = new LinkedList<>();
+
+        AnfrageDTO antwort = new AnfrageDTO();
+        antwort.setPersonenzahl(anfrageDTO.getPersonenzahl());
+        antwort.setLocalDateTime(anfrageDTO.getLocalDateTime());
+
         if (anfrageDTO.getId_restaurant() == 0) {
             LinkedList<Integer> inFrageKommendeRestaurants = restaurantTableRepository.getRestaurantTablesByPax(anfrageDTO.getPersonenzahl());
             if (inFrageKommendeRestaurants.size() > 0) {
                 for (int i = 0; i < inFrageKommendeRestaurants.size(); i++) {
-                    AnfrageDTO tempAnfrageDTO = new AnfrageDTO();
-                    tempAnfrageDTO.setPersonenzahl(anfrageDTO.getPersonenzahl());
-                    tempAnfrageDTO.setId_restaurant(inFrageKommendeRestaurants.get(i));
-                    tempAnfrageDTO.setLocalDateTime(anfrageDTO.getLocalDateTime());
-                    AnfrageDTO antwort = buildDTO(tempAnfrageDTO);
-                    if (antwort.isBuchungMoeglich()) {
+                    antwort.setId_restaurant(inFrageKommendeRestaurants.get(i));
+                    antwort = buildDTO(antwort);
+
+                    if (restaurantController.isOpen(anfrageDTO.getLocalDateTime(), restaurantController.getRestaurantById(inFrageKommendeRestaurants.get(i)).get()) && antwort.isBuchungMoeglich()) {
                         antwortliste.add(antwort);
                     }
                 }
                 if (antwortliste.size() == 0) {
-                    anfrageDTO.setBuchungMoeglich(false);
-                    antwortliste.add(anfrageDTO);
+                    antwort.setBuchungMoeglich(false);
+                    antwortliste.add(antwort);
                 }
             } else {
-                anfrageDTO.setBuchungMoeglich(false);
-                antwortliste.add(anfrageDTO);
+                antwort.setBuchungMoeglich(false);
+                antwortliste.add(antwort);
             }
         } else {
-            AnfrageDTO antwort = buildDTO(anfrageDTO);
+            antwort = buildDTO(anfrageDTO);
             antwortliste.add(antwort);
         }
         return antwortliste;
