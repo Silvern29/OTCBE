@@ -12,8 +12,6 @@ public class BookingDTO {
     private int restaurantId = -1;
     private int tableId = -1;
     private LocalDateTime localDateTime;
-//    private Date date;
-//    private Time time;
 
     public BookingDTO() {
     }
@@ -24,8 +22,6 @@ public class BookingDTO {
         this.jws = jws;
         this.restaurantId = restaurantId;
         this.tableId = tableId;
-//        this.date = date;
-//        this.time = time;
         this.localDateTime = date.toLocalDate().atTime(time.toLocalTime());
     }
 
@@ -36,8 +32,6 @@ public class BookingDTO {
         this.jws = jws;
         this.restaurantId = restaurantId;
         this.tableId = tableId;
-//        this.date = date;
-//        this.time = time;
         this.localDateTime = date.toLocalDate().atTime(time.toLocalTime());
     }
 
@@ -88,23 +82,6 @@ public class BookingDTO {
     public void setTableId(int tableId) {
         this.tableId = tableId;
     }
-
-//    public Date getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(Date date) {
-//        this.date = date;
-//    }
-//
-//    public Time getTime() {
-//        return time;
-//    }
-//
-//    public void setTime(Time time) {
-//        this.time = time;
-//    }
-
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;

@@ -1,22 +1,42 @@
 package otc.be.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.sql.Time;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
-@Entity
 public class OpeningTime {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private DayOfWeek dayOfWeek;
+    private LocalTime opening;
+    private LocalTime closing;
 
+    public OpeningTime(DayOfWeek dayOfWeek, LocalTime opening, LocalTime closing) {
+        this.dayOfWeek = dayOfWeek;
+        this.opening = opening;
+//        this.opening = LocalTime.parse(opening);
+//        this.closing = LocalTime.parse(closing);
+        this.closing = closing;
+    }
 
-    private String dayOfWeek;
-    private Time opening;
-    private Time closing;
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
 
+    public void setDayOfWeek(DayOfWeek dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 
+    public LocalTime getOpening() {
+        return opening;
+    }
 
+    public void setOpening(LocalTime opening) {
+        this.opening = opening;
+    }
+
+    public LocalTime getClosing() {
+        return closing;
+    }
+
+    public void setClosing(LocalTime closing) {
+        this.closing = closing;
+    }
 }

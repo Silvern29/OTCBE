@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -47,6 +46,9 @@ public class Restaurant implements Serializable {
 
     @Column(name = "pictures")
     private String pictures;
+
+    @Column(name = "opening_hours")
+    private String openingHours;
 
     //leerer Konstruktor (erforderlich)
     public Restaurant() {
@@ -157,7 +159,6 @@ public class Restaurant implements Serializable {
     }
 
     public List<Picture> getPictures() {
-        List<Picture> pictureList = new LinkedList<>();
         Gson gson = new Gson();
         Type listOfMyClassObject = new TypeToken<ArrayList<Picture>>() {
         }.getType();
@@ -167,5 +168,17 @@ public class Restaurant implements Serializable {
     public void setPictures(List<Picture> pictures) {
         Gson gson = new Gson();
         this.pictures = gson.toJson(pictures);
+    }
+
+    public List<OpeningTime> getOpeningHours() {
+        Gson gson = new Gson();
+        Type listOfMyClassObject = new TypeToken<ArrayList<OpeningTime>>() {
+        }.getType();
+        return gson.fromJson(this.openingHours, listOfMyClassObject);
+    }
+
+    public void setOpeningHours(List<OpeningTime> openingHours) {
+        Gson gson = new Gson();
+        this.openingHours = gson.toJson(openingHours);
     }
 }

@@ -39,8 +39,8 @@ public class Booking implements Serializable {
     @JoinColumn(name = "id_restaurant_table")   //,  insertable = false, updatable = false, nullable = false)
     private RestaurantTable restaurantTable;
 
-    //@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss") //als Anotation für Date - so einfach kanns gehen
-    @Column(name = "localDateTime")
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm") //als Anotation für Date - so einfach kanns gehen
+    @Column(name = "local_date_time")
     private LocalDateTime localDateTime;
 
 //    @Column(name = "date")

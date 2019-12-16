@@ -16,7 +16,7 @@ import java.security.Key;
 
 @Controller
 public class AdminController {
-    private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
