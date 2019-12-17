@@ -1,18 +1,22 @@
-package otc.be.entity;
+package otc.be.pojo;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public class OpeningTime {
     private DayOfWeek dayOfWeek;
+
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime opening;
+
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime closing;
 
     public OpeningTime(DayOfWeek dayOfWeek, LocalTime opening, LocalTime closing) {
         this.dayOfWeek = dayOfWeek;
         this.opening = opening;
-//        this.opening = LocalTime.parse(opening);
-//        this.closing = LocalTime.parse(closing);
         this.closing = closing;
     }
 

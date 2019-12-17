@@ -1,4 +1,4 @@
-package otc.be.dto;
+package otc.be.pojo;
 
 public class Picture {
     private String link;

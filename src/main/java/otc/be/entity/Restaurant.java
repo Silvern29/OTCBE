@@ -3,13 +3,15 @@ package otc.be.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import otc.be.dto.Picture;
+import otc.be.pojo.Picture;
+import otc.be.pojo.OpeningTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Restaurant implements Serializable {
@@ -44,6 +46,13 @@ public class Restaurant implements Serializable {
     @Column(name = "bookings")
     private List<Booking> bookings;
 
+    @ManyToMany
+    @JoinTable(
+            name = "restaurant_tags",
+            joinColumns = @JoinColumn(name = "restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    Set<Tag> tags;
+
     @Column(name = "pictures")
     private String pictures;
 
@@ -65,7 +74,7 @@ public class Restaurant implements Serializable {
         this.info = info;
     }
 
-    public Restaurant(int id, String name, String kitchen, String street, String apNr, String zip, String city, String info, List<RestaurantTable> restaurantTables, List<Booking> bookings) {
+    public Restaurant(int id, String name, String kitchen, String street, String apNr, String zip, String city, String info, List<RestaurantTable> restaurantTables, List<Booking> bookings, Set<Tag> tags) {
         this.id = id;
         this.name = name;
         this.kitchen = kitchen;
@@ -76,6 +85,7 @@ public class Restaurant implements Serializable {
         this.info = info;
         this.restaurantTables = restaurantTables;
         this.bookings = bookings;
+        this.tags = tags;
     }
 
     public int getId() {
@@ -156,6 +166,14 @@ public class Restaurant implements Serializable {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     public List<Picture> getPictures() {

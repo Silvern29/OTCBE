@@ -1,4 +1,4 @@
-package otc.be.entity;
+package otc.be.dto;
 
 import java.sql.Date;
 import java.sql.Time;

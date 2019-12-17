@@ -4,7 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import otc.be.config.Utils;
-import otc.be.entity.OpeningTime;
+import otc.be.pojo.OpeningTime;
 import otc.be.entity.Restaurant;
 import otc.be.repository.RestaurantRepository;
 
@@ -18,6 +18,8 @@ public class RestaurantController {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+    @Autowired
+    private TagController tagController;
 
     public Iterable<Restaurant> getAllRestaurants() {
         return restaurantRepository.findByOrderByIdAsc();
@@ -33,6 +35,7 @@ public class RestaurantController {
 
 
     public void create(Restaurant restaurant) {
+        tagController.createTags(restaurant.getTags());
         restaurantRepository.save(restaurant);
     }
 
@@ -66,6 +69,7 @@ public class RestaurantController {
 
     public Restaurant update(Restaurant restaurant) {
         if (restaurantRepository.findById(restaurant.getId()).isPresent()) {
+            restaurant.setTags(tagController.createTags(restaurant.getTags()));
             Restaurant newRestaurant = restaurantRepository.findById(restaurant.getId()).get();
             BeanUtils.copyProperties(restaurant, newRestaurant, Utils.getNullPropertyNames(restaurant));
             return restaurantRepository.save(newRestaurant);

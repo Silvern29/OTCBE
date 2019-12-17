@@ -1,6 +1,7 @@
 package otc.be.dto;
 
 import otc.be.entity.Restaurant;
+import otc.be.pojo.Picture;
 
 import java.util.List;
 

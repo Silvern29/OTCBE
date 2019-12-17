@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import otc.be.controller.AnfrageController;
-import otc.be.entity.AnfrageDTO;
+import otc.be.dto.AnfrageDTO;
 
 import java.util.LinkedList;
 
