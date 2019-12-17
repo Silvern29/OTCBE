@@ -42,7 +42,7 @@ public class RestaurantController {
     public boolean isOpen(LocalDateTime ldt, Restaurant restaurant){
         List<OpeningTime> matchingDays = new LinkedList<>();
         restaurant.getOpeningHours().forEach(openingTime -> {
-            if (ldt.getDayOfWeek().equals(openingTime.getDayOfWeek())){
+            if (ldt.getDayOfWeek().getValue() == openingTime.getDayOfWeek().getValue()){
                 matchingDays.add(openingTime);
             }
         });

@@ -1,5 +1,7 @@
 package otc.be.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ public class AnfrageDTO {
     private int personenzahl;
     private int id_table;
     private boolean buchungMoeglich;
+    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime localDateTime;
 
     public AnfrageDTO() {
@@ -21,7 +24,6 @@ public class AnfrageDTO {
         this.personenzahl = personenzahl;
         this.id_table = id_table;
         this.buchungMoeglich = buchungMoeglich;
-        this.localDateTime = date.toLocalDate().atTime(time.toLocalTime());
     }
 
     public int getId_restaurant() {
