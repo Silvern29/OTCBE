@@ -11,6 +11,6 @@ import java.util.Optional;
 @Repository
 public interface TagRepository extends CrudRepository<Tag, Integer> {
 
-    @Query(value = "SELECT * FROM tag WHERE text='tag'", nativeQuery = true)
+    @Query(value = "SELECT * FROM tag WHERE text='text'", nativeQuery = true)
     Optional<Tag> findTagByText(@Param("text") String text);
 }

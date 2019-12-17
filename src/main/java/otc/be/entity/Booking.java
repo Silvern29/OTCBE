@@ -1,6 +1,5 @@
 package otc.be.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -32,7 +31,6 @@ public class Booking implements Serializable {
     @JoinColumn(name = "id_restaurant_table")
     private RestaurantTable restaurantTable;
 
-//    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
     @Column(name = "local_date_time")
     private LocalDateTime localDateTime;
 

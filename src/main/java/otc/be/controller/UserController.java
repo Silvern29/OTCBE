@@ -16,6 +16,7 @@ import otc.be.repository.UserRepository;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -87,9 +88,7 @@ public class UserController {
     public LinkedList<Booking> allBookingsInFuture(int id, String jws) {
         if (authorizationController.isAuthorized(jws)) {
             if (userRepository.findById(id).isPresent()) {
-                Date datum = Date.valueOf(LocalDate.now());
-                Time uhrzeit = Time.valueOf(LocalTime.now());
-                LinkedList<Booking> allBookings = bookingRepository.getListAllBookingsinFuture(id, datum, uhrzeit);
+                LinkedList<Booking> allBookings = bookingRepository.getListAllBookingsinFuture(id, LocalDateTime.now());
                 if (allBookings.size() > 0) {
                     return allBookings;
                 } else {
