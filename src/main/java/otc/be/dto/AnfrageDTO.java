@@ -12,7 +12,7 @@ public class AnfrageDTO {
     private int personenzahl;
     private int id_table;
     private boolean buchungMoeglich;
-    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
+//    @JsonFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime localDateTime;
 
     public AnfrageDTO() {

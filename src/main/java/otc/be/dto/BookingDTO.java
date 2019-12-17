@@ -1,7 +1,7 @@
 package otc.be.dto;
 
-import java.sql.Date;
-import java.sql.Time;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class BookingDTO {
@@ -16,23 +16,21 @@ public class BookingDTO {
     public BookingDTO() {
     }
 
-    public BookingDTO(int pax, int userId, String jws, int restaurantId, int tableId, Date date, Time time) {
+    public BookingDTO(int pax, int userId, String jws, int restaurantId, int tableId) {
         this.pax = pax;
         this.userId = userId;
         this.jws = jws;
         this.restaurantId = restaurantId;
         this.tableId = tableId;
-        this.localDateTime = date.toLocalDate().atTime(time.toLocalTime());
     }
 
-    public BookingDTO(int id, int pax, int userId, String jws, int restaurantId, int tableId, Date date, Time time) {
+    public BookingDTO(int id, int pax, int userId, String jws, int restaurantId, int tableId) {
         this.id = id;
         this.pax = pax;
         this.userId = userId;
         this.jws = jws;
         this.restaurantId = restaurantId;
         this.tableId = tableId;
-        this.localDateTime = date.toLocalDate().atTime(time.toLocalTime());
     }
 
     public int getId() {
