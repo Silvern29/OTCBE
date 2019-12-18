@@ -1,6 +1,7 @@
 package otc.be.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 import otc.be.config.ReviewRatingKey;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ public class Review {
     @EmbeddedId
     private ReviewRatingKey id;
 
-    @CreationTimestamp
+    @CreatedDate
     @Column(name = "date")
     private LocalDate localDate;
 

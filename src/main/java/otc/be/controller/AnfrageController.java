@@ -58,11 +58,12 @@ public class AnfrageController {
         LinkedList<RestaurantTable> possibleTables = restaurantTableRepository.getListTablesPAX(anfrageDTO.getId_restaurant(), anfrageDTO.getPersonenzahl());
         if (restaurantController.isOpen(anfrageDTO.getLocalDateTime(), restaurantController.getRestaurantById(anfrageDTO.getId_restaurant()).get()) && possibleTables.size() > 0) {
             int i = 0;
-            while(!anfrageDTO.isBuchungMoeglich() || i == possibleTables.size()) {
+            while(!anfrageDTO.isBuchungMoeglich() || i < possibleTables.size()) {
                 if (restaurantTableController.getRestaurantTableByIdIsFree(possibleTables.get(i).getId(), anfrageDTO.getLocalDateTime())) {
                     anfrageDTO.setBuchungMoeglich(true);
                     anfrageDTO.setId_table(possibleTables.get(i).getId());
                 }
+                i++;
             }
         }
         return anfrageDTO;
