@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import otc.be.controller.ReviewController;
 import otc.be.pojo.Picture;
 import otc.be.pojo.OpeningTime;
 
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Restaurant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +38,7 @@ public class Restaurant implements Serializable {
     @Column(name = "info")
     private String info;
     @Column(name = "avg_review")
-    private int avgReview;
+    private double avgReview;
 
     @OneToMany(mappedBy = "restaurant")
     Set<Review> reviews;
@@ -186,11 +185,11 @@ public class Restaurant implements Serializable {
         this.tags = tags;
     }
 
-    public int getAvgReview() {
+    public double getAvgReview() {
         return avgReview;
     }
 
-    public void setAvgReview(int avgReview) {
+    public void setAvgReview(double avgReview) {
         this.avgReview = avgReview;
     }
 

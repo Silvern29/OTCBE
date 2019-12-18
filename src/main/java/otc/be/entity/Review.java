@@ -63,4 +63,12 @@ public class Review {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
+    }
 }
