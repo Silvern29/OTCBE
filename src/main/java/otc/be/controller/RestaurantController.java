@@ -35,7 +35,7 @@ public class RestaurantController {
 
 
     public void create(Restaurant restaurant) {
-        tagController.createTags(restaurant.getTags());
+        tagController.createTagList(restaurant.getTags());
         restaurantRepository.save(restaurant);
     }
 
@@ -69,7 +69,7 @@ public class RestaurantController {
 
     public Restaurant update(Restaurant restaurant) {
         if (restaurantRepository.findById(restaurant.getId()).isPresent()) {
-            restaurant.setTags(tagController.createTags(restaurant.getTags()));
+            if(restaurant.getTags() != null) restaurant.setTags(tagController.createTagList(restaurant.getTags()));
             Restaurant newRestaurant = restaurantRepository.findById(restaurant.getId()).get();
             BeanUtils.copyProperties(restaurant, newRestaurant, Utils.getNullPropertyNames(restaurant));
             return restaurantRepository.save(newRestaurant);

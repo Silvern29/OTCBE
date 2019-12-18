@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import otc.be.entity.Tag;
 import otc.be.repository.TagRepository;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -13,21 +16,30 @@ public class TagController {
     private TagRepository tagRepository;
 
     public Tag createTag(Tag tag){
-        if(!tagRepository.findTagByText(tag.getText()).isPresent()){
-            tagRepository.save(tag);
-            return tag;
-        }
-        return null;
+        return tagRepository.save(tag);
     }
 
-    public Set<Tag> createTags(Set<Tag> tags){
-        tags.forEach(tag -> tag.setText(tag.getText().toLowerCase()));
+    public List<Tag> addTags(List<Tag> results, Tag tag){
+        if(!tagRepository.findTagByText(tag.getText()).isPresent()) {
+            createTag(tag);
+        }
+        results.add(tagRepository.findTagByText(tag.getText()).get());
+        return results;
+    }
+
+    public List<Tag> createTagList(List<Tag> tags){
+        Set<String> tagSet = new HashSet<>();
         tags.forEach(tag -> {
-            if(createTag(tag) == null) {
-                tags.remove(tag);
-            }
+            tag.setText(tag.getText().toLowerCase());
+            tagSet.add(tag.getText());
         });
-        return tags;
+        List<Tag> tagList = new LinkedList<>();
+        tagSet.forEach(str -> {
+            tagList.add(tagRepository.findTagByText(str).get());
+        });
+        List<Tag> results = new LinkedList<>();
+        tagList.forEach(tag -> addTags(results, tag));
+        return results;
     }
 
     public Iterable<Tag> getAllTags(){

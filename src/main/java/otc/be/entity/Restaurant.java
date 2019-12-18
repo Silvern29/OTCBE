@@ -1,8 +1,12 @@
 package otc.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import otc.be.pojo.Picture;
 import otc.be.pojo.OpeningTime;
 
@@ -14,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Restaurant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +38,11 @@ public class Restaurant implements Serializable {
     private String city;
     @Column(name = "info")
     private String info;
+    @Column(name = "avg_review")
+    private int avgReview;
+
+    @OneToMany(mappedBy = "restaurant")
+    Set<Review> reviews;
 
     //ein Restaurant hat viele Tische  --> List
     @JsonBackReference(value = "table-restaurant")
@@ -46,12 +56,12 @@ public class Restaurant implements Serializable {
     @Column(name = "bookings")
     private List<Booking> bookings;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = Tag.class, fetch = FetchType.LAZY)
     @JoinTable(
             name = "restaurant_tags",
             joinColumns = @JoinColumn(name = "restaurant_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    Set<Tag> tags;
+    List<Tag> tags;
 
     @Column(name = "pictures")
     private String pictures;
@@ -74,7 +84,7 @@ public class Restaurant implements Serializable {
         this.info = info;
     }
 
-    public Restaurant(int id, String name, String kitchen, String street, String apNr, String zip, String city, String info, List<RestaurantTable> restaurantTables, List<Booking> bookings, Set<Tag> tags) {
+    public Restaurant(int id, String name, String kitchen, String street, String apNr, String zip, String city, String info, List<RestaurantTable> restaurantTables, List<Booking> bookings, List<Tag> tags) {
         this.id = id;
         this.name = name;
         this.kitchen = kitchen;
@@ -168,12 +178,20 @@ public class Restaurant implements Serializable {
         this.bookings = bookings;
     }
 
-    public Set<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public int getAvgReview() {
+        return avgReview;
+    }
+
+    public void setAvgReview(int avgReview) {
+        this.avgReview = avgReview;
     }
 
     public List<Picture> getPictures() {

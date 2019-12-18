@@ -16,7 +16,7 @@ public class Tag {
     @Column(name = "text")
     private String text;
 
-    @ManyToMany(mappedBy = "tags")
+    @ManyToMany(targetEntity = Restaurant.class, mappedBy = "tags")
     private List<Restaurant> restaurants;
 
     public int getId() {
