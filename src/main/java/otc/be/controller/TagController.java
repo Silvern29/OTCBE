@@ -19,11 +19,11 @@ public class TagController {
         return tagRepository.save(tag);
     }
 
-    public List<Tag> addTags(List<Tag> results, Tag tag){
-        if(!tagRepository.findTagByText(tag.getText()).isPresent()) {
-            createTag(tag);
+    public List<Tag> addTags(List<Tag> results, String str){
+        if(!tagRepository.findTagByText(str).isPresent()) {
+            createTag(new Tag(str));
         }
-        results.add(tagRepository.findTagByText(tag.getText()).get());
+        results.add(tagRepository.findTagByText(str).get());
         return results;
     }
 
@@ -33,12 +33,8 @@ public class TagController {
             tag.setText(tag.getText().toLowerCase());
             tagSet.add(tag.getText());
         });
-        List<Tag> tagList = new LinkedList<>();
-        tagSet.forEach(str -> {
-            tagList.add(tagRepository.findTagByText(str).get());
-        });
         List<Tag> results = new LinkedList<>();
-        tagList.forEach(tag -> addTags(results, tag));
+        tagSet.forEach(str -> addTags(results, str));
         return results;
     }
 

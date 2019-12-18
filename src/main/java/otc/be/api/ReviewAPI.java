@@ -30,7 +30,7 @@ public class ReviewAPI {
 
     @RequestMapping(method = RequestMethod.GET, path = "/reviews/avg/{restaurant_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public double getAvgReviewByRestaurant(@PathVariable(name = "restaurant_id") int restaurantId) {
-        return reviewController.getAvgReview(restaurantId);
+        return reviewController.calcAvgReview(restaurantId);
     }
 
 

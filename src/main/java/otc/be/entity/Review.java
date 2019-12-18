@@ -1,6 +1,5 @@
 package otc.be.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import otc.be.config.ReviewRatingKey;
 

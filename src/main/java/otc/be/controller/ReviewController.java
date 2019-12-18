@@ -23,9 +23,10 @@ public class ReviewController {
 
     public void create(Review review){
         reviewRepository.save(review);
+        review.getRestaurant().setAvgReview(calcAvgReview(review.getRestaurant().getId()));
     }
 
-    public double getAvgReview(int restId){
+    public double calcAvgReview(int restId){
         Iterable<Review> reviews = reviewRepository.findReviewsByRestaurant(restId);
         List<Integer> ratings = new LinkedList<>();
 

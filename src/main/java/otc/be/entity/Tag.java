@@ -19,6 +19,13 @@ public class Tag {
     @ManyToMany(targetEntity = Restaurant.class, mappedBy = "tags")
     private List<Restaurant> restaurants;
 
+    public Tag() {
+    }
+
+    public Tag(String text) {
+        this.text = text;
+    }
+
     public int getId() {
         return id;
     }
