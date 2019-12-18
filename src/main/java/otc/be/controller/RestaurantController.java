@@ -47,7 +47,7 @@ public class RestaurantController {
             }
         });
         matchingDays.forEach(openingTime -> {
-            if(!(ldt.toLocalTime().isAfter(openingTime.getOpening()) && ldt.toLocalTime().isBefore(openingTime.getClosing()))) {
+            if(!(!ldt.toLocalTime().isBefore(openingTime.getOpening()) && !ldt.toLocalTime().isAfter(openingTime.getClosing().minusHours(1)))) {
                 matchingDays.remove(openingTime);
             }
         });
