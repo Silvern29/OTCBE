@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 //ersetzt JsonManagedReference
 public class RestaurantTable implements Serializable {
 
@@ -26,7 +26,6 @@ public class RestaurantTable implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_restaurant")
     //@JsonManagedReference(value = "table-restaurant")
-    //, insertable = false, updatable = false, nullable = false) auskommentiert, wenn es drin ist, geht das Anlegen der Tische mit der Restaurant-ID nicht
     private Restaurant restaurant;
 
     //ein Tisch kann in mehrere Bookings involviert sein

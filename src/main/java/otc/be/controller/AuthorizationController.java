@@ -16,7 +16,7 @@ import java.security.Key;
 
 @Controller
 public class AuthorizationController {
-    private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     @Autowired
     private UserRepository repository;
     @Autowired

@@ -4,9 +4,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import otc.be.config.Utils;
+import otc.be.pojo.OpeningTime;
 import otc.be.entity.Restaurant;
 import otc.be.repository.RestaurantRepository;
 
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -14,6 +18,8 @@ public class RestaurantController {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+    @Autowired
+    private TagController tagController;
 
     public Iterable<Restaurant> getAllRestaurants() {
         return restaurantRepository.findByOrderByIdAsc();
@@ -29,10 +35,24 @@ public class RestaurantController {
 
 
     public void create(Restaurant restaurant) {
+        tagController.createTagList(restaurant.getTags());
         restaurantRepository.save(restaurant);
-        System.out.println("Jetzt sollte ein neues Restaurant in der Tabelle Restaurant eingetragen worden sein.");
     }
 
+    public boolean isOpen(LocalDateTime ldt, Restaurant restaurant){
+        List<OpeningTime> matchingDays = new LinkedList<>();
+        restaurant.getOpeningHours().forEach(openingTime -> {
+            if (ldt.getDayOfWeek().getValue() == openingTime.getDayOfWeek().getValue()){
+                matchingDays.add(openingTime);
+            }
+        });
+        matchingDays.forEach(openingTime -> {
+            if(!(!ldt.toLocalTime().isBefore(openingTime.getOpening()) && !ldt.toLocalTime().isAfter(openingTime.getClosing().minusHours(1)))) {
+                matchingDays.remove(openingTime);
+            }
+        });
+        return matchingDays.size() > 0;
+    }
 
 //    public Restaurant update(Restaurant restaurant) {
 //        Restaurant updatedRestaurant = restaurantRepository.findById(restaurant.getId()).get();
@@ -44,12 +64,12 @@ public class RestaurantController {
 //        if (restaurant.getCity() != null) updatedRestaurant.setCity(restaurant.getCity());
 //        if (restaurant.getInfo() != null) updatedRestaurant.setInfo(restaurant.getInfo());
 //        restaurantRepository.save(updatedRestaurant);
-//        System.out.println(("Jetzt sollten die Restaurantdaten zur ID" + updatedRestaurant.getId() + " geändert worden sein"));
 //        return updatedRestaurant;
 //    }
 
     public Restaurant update(Restaurant restaurant) {
         if (restaurantRepository.findById(restaurant.getId()).isPresent()) {
+            if(restaurant.getTags() != null) restaurant.setTags(tagController.createTagList(restaurant.getTags()));
             Restaurant newRestaurant = restaurantRepository.findById(restaurant.getId()).get();
             BeanUtils.copyProperties(restaurant, newRestaurant, Utils.getNullPropertyNames(restaurant));
             return restaurantRepository.save(newRestaurant);
@@ -59,7 +79,6 @@ public class RestaurantController {
     }
 
     public void deleteById(Integer id) {
-        System.out.println("Nun sollte das Restaurant mit der ID " + id + " gelöscht worden sein.");
         restaurantRepository.deleteById(id);
     }
 }

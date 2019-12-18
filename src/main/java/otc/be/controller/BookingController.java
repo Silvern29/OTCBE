@@ -54,8 +54,7 @@ public class BookingController {
             booking.setUser(userRepository.findById(bookingDTO.getUserId()).get());
             booking.setRestaurant(restaurantRepository.findById(bookingDTO.getRestaurantId()).get());
             booking.setRestaurantTable(restaurantTableRepository.findById(bookingDTO.getTableId()).get());
-            booking.setDate(bookingDTO.getDate());
-            booking.setTime(bookingDTO.getTime());
+            booking.setLocalDateTime(bookingDTO.getLocalDateTime());
             bookingRepository.save(booking);
             return booking;
         } else {
@@ -66,20 +65,14 @@ public class BookingController {
     public Booking update(BookingDTO bookingDTO) {
         if (adminController.isAuthorized(bookingDTO.getJws())) {
             Booking updatedBooking = bookingRepository.findById(bookingDTO.getId()).get();
-            //ist ein Datum eingegeben?
-            if (bookingDTO.getDate() != null) updatedBooking.setDate(bookingDTO.getDate());
-            //ist eine Uhrzeit eingegeben?
-            if (bookingDTO.getTime() != null) updatedBooking.setTime(bookingDTO.getTime());
-            //ist ein User eingegeben?
+            if (bookingDTO.getLocalDateTime() != null) updatedBooking.setLocalDateTime(bookingDTO.getLocalDateTime());
             if (bookingDTO.getUserId() > 0)
                 updatedBooking.setUser(userRepository.findById(bookingDTO.getUserId()).get());
-            //ist ein Tisch eingegeben?
             if (bookingDTO.getTableId() > 0)
                 updatedBooking.setRestaurantTable(restaurantTableRepository.findById(bookingDTO.getTableId()).get());
             if (bookingDTO.getRestaurantId() > 0)
                 updatedBooking.setRestaurant(restaurantRepository.findById(bookingDTO.getRestaurantId()).get());
             if (bookingDTO.getPax() > 0) updatedBooking.setPax(bookingDTO.getPax());
-            //Schreiben in die DB
             return bookingRepository.save(updatedBooking);
         } else {
             throw new NotLoggedInException();

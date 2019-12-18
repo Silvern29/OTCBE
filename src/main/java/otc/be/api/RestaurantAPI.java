@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import otc.be.controller.RestaurantController;
-import otc.be.entity.Booking;
 import otc.be.entity.Restaurant;
 
 import java.util.Optional;
@@ -25,7 +24,6 @@ public class RestaurantAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
-    //, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void create(@RequestBody Restaurant restaurant) {
         restaurantController.create(restaurant);
     }

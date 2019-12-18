@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User implements Serializable {
@@ -27,6 +28,9 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = Booking.class)
     //ein User kann in viele Booking-Einträge involviert sein --> List
     private List<Booking> bookings;
+
+    @OneToMany(mappedBy = "user")
+    Set<Review> reviews;
 
     //leerer Konstruktor erforderlich
     public User() {

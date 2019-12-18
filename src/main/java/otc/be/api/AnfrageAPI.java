@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import otc.be.controller.AnfrageController;
-import otc.be.entity.Anfrage;
+import otc.be.dto.AnfrageDTO;
 
 import java.util.LinkedList;
 
@@ -18,9 +18,8 @@ public class AnfrageAPI {
     private AnfrageController anfrageController;
 
     @RequestMapping(method = RequestMethod.POST, path = "/anfrage", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LinkedList<Anfrage> create(@RequestBody Anfrage anfrage) {
-        LinkedList<Anfrage> antwortliste = anfrageController.step1(anfrage);
-        return antwortliste;
+    public LinkedList<AnfrageDTO> create(@RequestBody AnfrageDTO anfrageDTO) {
+        return anfrageController.buildList(anfrageDTO);
     }
 
 }

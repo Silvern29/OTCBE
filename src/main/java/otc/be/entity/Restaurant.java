@@ -1,18 +1,23 @@
 package otc.be.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import otc.be.dto.Picture;
+import otc.be.controller.ReviewController;
+import otc.be.pojo.Picture;
+import otc.be.pojo.OpeningTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Restaurant implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +37,11 @@ public class Restaurant implements Serializable {
     private String city;
     @Column(name = "info")
     private String info;
+    @Column(name = "avg_review")
+    private double avgReview;
+
+    @OneToMany(mappedBy = "restaurant")
+    Set<Review> reviews;
 
     //ein Restaurant hat viele Tische  --> List
     @JsonBackReference(value = "table-restaurant")
@@ -45,8 +55,18 @@ public class Restaurant implements Serializable {
     @Column(name = "bookings")
     private List<Booking> bookings;
 
+    @ManyToMany(targetEntity = Tag.class, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "restaurant_tags",
+            joinColumns = @JoinColumn(name = "restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    List<Tag> tags;
+
     @Column(name = "pictures")
     private String pictures;
+
+    @Column(name = "opening_hours")
+    private String openingHours;
 
     //leerer Konstruktor (erforderlich)
     public Restaurant() {
@@ -63,7 +83,7 @@ public class Restaurant implements Serializable {
         this.info = info;
     }
 
-    public Restaurant(int id, String name, String kitchen, String street, String apNr, String zip, String city, String info, List<RestaurantTable> restaurantTables, List<Booking> bookings) {
+    public Restaurant(int id, String name, String kitchen, String street, String apNr, String zip, String city, String info, List<RestaurantTable> restaurantTables, List<Booking> bookings, List<Tag> tags) {
         this.id = id;
         this.name = name;
         this.kitchen = kitchen;
@@ -74,6 +94,7 @@ public class Restaurant implements Serializable {
         this.info = info;
         this.restaurantTables = restaurantTables;
         this.bookings = bookings;
+        this.tags = tags;
     }
 
     public int getId() {
@@ -156,8 +177,23 @@ public class Restaurant implements Serializable {
         this.bookings = bookings;
     }
 
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public double getAvgReview() {
+        return avgReview;
+    }
+
+    public void setAvgReview(double avgReview) {
+        this.avgReview = avgReview;
+    }
+
     public List<Picture> getPictures() {
-        List<Picture> pictureList = new LinkedList<>();
         Gson gson = new Gson();
         Type listOfMyClassObject = new TypeToken<ArrayList<Picture>>() {
         }.getType();
@@ -167,5 +203,17 @@ public class Restaurant implements Serializable {
     public void setPictures(List<Picture> pictures) {
         Gson gson = new Gson();
         this.pictures = gson.toJson(pictures);
+    }
+
+    public List<OpeningTime> getOpeningHours() {
+        Gson gson = new Gson();
+        Type listOfMyClassObject = new TypeToken<ArrayList<OpeningTime>>() {
+        }.getType();
+        return gson.fromJson(this.openingHours, listOfMyClassObject);
+    }
+
+    public void setOpeningHours(List<OpeningTime> openingHours) {
+        Gson gson = new Gson();
+        this.openingHours = gson.toJson(openingHours);
     }
 }

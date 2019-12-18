@@ -18,7 +18,7 @@ public class RestaurantTableAPI {
     @Autowired
     private RestaurantTableController restaurantTableController;
 
-    @RequestMapping(method = RequestMethod.GET, path = "/tables" /*,produces = MediaType.APPLICATION_JSON_VALUE*/)
+    @RequestMapping(method = RequestMethod.GET, path = "/tables")
     public Iterable<RestaurantTable> getListAll() {
         return restaurantTableController.getAllRestaurantTables();
     }
@@ -45,9 +45,4 @@ public class RestaurantTableAPI {
         restaurantTableController.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//    Zur Entwicklung/Erprobung geht aufgrund geänderter Eingangsparameter für restaurantTableController.getRestaurantTableByIdIsFree(id) nicht mehr
-//    @RequestMapping(method = RequestMethod.GET, path = "/tables/free/{id}")
-//    public boolean getRestaurantTableByIdIsFree(@PathVariable("id") Integer id) {
-//        return restaurantTableController.getRestaurantTableByIdIsFree(id);
-//    }
 }

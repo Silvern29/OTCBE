@@ -8,18 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import otc.be.controller.RestaurantController;
-import otc.be.entity.Booking;
-import otc.be.entity.Restaurant;
-import otc.be.entity.RestaurantTable;
-import otc.be.entity.User;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.RestaurantRepository;
 import otc.be.repository.RestaurantTableRepository;
 import otc.be.repository.UserRepository;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
 
 @SpringBootApplication
 public class OpenTableCloneApplication {

@@ -1,6 +1,7 @@
 package otc.be.dto;
 
 import otc.be.entity.Restaurant;
+import otc.be.pojo.Picture;
 
 import java.util.List;
 
@@ -90,13 +91,11 @@ public class RestaurantDTO {
         this.info = info;
     }
 
-//    public String getPictures() {
-//        Gson gson = new Gson();
-//        this.pictures = gson.toJson(restaurant.getPictures());
-//        return pictures;
-//    }
-//
-//    public void setPictures(String pictures) {
-//        this.pictures = pictures;
-//    }
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+    }
 }
