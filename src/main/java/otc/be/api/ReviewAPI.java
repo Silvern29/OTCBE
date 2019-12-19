@@ -19,8 +19,8 @@ public class ReviewAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody Review review) {
-        reviewController.create(review);
+    public Review create(@RequestBody Review review) {
+        return reviewController.create(review);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/reviews/{restaurant_id}", produces = MediaType.APPLICATION_JSON_VALUE)

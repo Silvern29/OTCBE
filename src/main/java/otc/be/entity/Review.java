@@ -6,6 +6,15 @@ import otc.be.config.ReviewRatingKey;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ *Review uses @EmbeddedId -> no auto generation of id, id has to be send on creation as ReviewRatingKey-Object
+ * "id": {
+ *     "restaurant_id": 45,
+ *     "userId": 41
+ * }
+ *
+ **/
+
 @Entity
 public class Review {
     @EmbeddedId
