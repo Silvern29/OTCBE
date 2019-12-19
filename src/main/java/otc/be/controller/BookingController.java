@@ -12,6 +12,7 @@ import otc.be.repository.UserRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -36,8 +37,7 @@ public class BookingController {
 
     public Iterable<Booking> getFutureBookingsByResId(int id, String jws) {
         if (adminController.isAuthorized(jws)) {
-            Date datum = Date.valueOf(LocalDate.now());
-            return bookingRepository.getFutureBookingsByRestaurant(id, datum);
+            return bookingRepository.getFutureBookingsByRestaurant(id, LocalDateTime.now());
         } else {
             throw new NotLoggedInException();
         }

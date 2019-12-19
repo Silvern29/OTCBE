@@ -13,11 +13,7 @@ import otc.be.exception.NotLoggedInException;
 import otc.be.repository.BookingRepository;
 import otc.be.repository.UserRepository;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -85,10 +81,27 @@ public class UserController {
         }
     }
 
-    public LinkedList<Booking> allBookingsInFuture(int id, String jws) {
+    public LinkedList<Booking> usersBookingsInFuture(int id, String jws) {
         if (authorizationController.isAuthorized(jws)) {
             if (userRepository.findById(id).isPresent()) {
-                LinkedList<Booking> allBookings = bookingRepository.getListAllBookingsinFuture(id, LocalDateTime.now());
+                LinkedList<Booking> allBookings = bookingRepository.getFutureBookingsByUser(id, LocalDateTime.now());
+                if (allBookings.size() > 0) {
+                    return allBookings;
+                } else {
+                    throw new NoBookingsException("No bookings found for user");
+                }
+            } else {
+                throw new NoUserException("User not found");
+            }
+        } else {
+            throw new NotLoggedInException();
+        }
+    }
+
+    public LinkedList<Booking> usersBookingsInPast(int id, String jws) {
+        if (authorizationController.isAuthorized(jws)) {
+            if (userRepository.findById(id).isPresent()) {
+                LinkedList<Booking> allBookings = bookingRepository.getPastBookingsByUser(id, LocalDateTime.now());
                 if (allBookings.size() > 0) {
                     return allBookings;
                 } else {

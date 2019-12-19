@@ -75,7 +75,12 @@ public class UserAPI {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/users/allBookingsInFuture/{id}/{jws}")
-    public LinkedList<Booking> allBookingsInFuture(@PathVariable("id") Integer id, @PathVariable("jws") String jws) throws NoUserException, NoBookingsException {
-        return userController.allBookingsInFuture(id, jws);
+    public LinkedList<Booking> usersBookingsInFuture(@PathVariable("id") Integer id, @PathVariable("jws") String jws) {
+        return userController.usersBookingsInFuture(id, jws);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/users/allBookingsInPast/{id}/{jws}")
+    public LinkedList<Booking> usersBookingsInPast(@PathVariable("id") Integer id, @PathVariable("jws") String jws) {
+        return userController.usersBookingsInPast(id, jws);
     }
 }
