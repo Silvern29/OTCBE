@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -33,6 +34,9 @@ public class Booking implements Serializable {
 
     @Column(name = "local_date_time")
     private LocalDateTime localDateTime;
+
+    @OneToMany(mappedBy = "booking")
+    Set<Review> reviews;
 
     //leerer Konstruktor erforderlich
     public Booking() {
@@ -92,5 +96,13 @@ public class Booking implements Serializable {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }

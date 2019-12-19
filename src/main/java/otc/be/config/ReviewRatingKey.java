@@ -14,6 +14,9 @@ public class ReviewRatingKey implements Serializable {
     @Column(name = "user_id")
     private int userId;
 
+    @Column(name = "booking_id")
+    private int bookingId;
+
     public ReviewRatingKey() {
     }
 
@@ -33,17 +36,26 @@ public class ReviewRatingKey implements Serializable {
         this.userId = userId;
     }
 
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ReviewRatingKey)) return false;
         ReviewRatingKey that = (ReviewRatingKey) o;
         return getRestaurantId() == that.getRestaurantId() &&
-                getUserId() == that.getUserId();
+                getUserId() == that.getUserId() &&
+                getBookingId() == that.getBookingId();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getRestaurantId(), getUserId());
+        return Objects.hash(getRestaurantId(), getUserId(), getBookingId());
     }
 }

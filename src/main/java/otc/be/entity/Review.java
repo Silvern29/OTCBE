@@ -34,6 +34,11 @@ public class Review {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
+    @ManyToOne
+    @MapsId("booking_id")
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
+
     @Column(name = "rating")
     private int rating;
 
@@ -78,5 +83,13 @@ public class Review {
 
     public void setLocalDate(LocalDate localDate) {
         this.localDate = localDate;
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 }
