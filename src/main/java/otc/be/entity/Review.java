@@ -34,7 +34,7 @@ public class Review {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    @ManyToOne
+    @OneToOne
     @MapsId("booking_id")
     @JoinColumn(name = "booking_id")
     private Booking booking;
