@@ -20,9 +20,9 @@ public interface BookingRepository extends CrudRepository<Booking, Integer> {
     @Query(value = "SELECT * FROM booking where id_user=?1 AND local_date_time > ?2", nativeQuery = true)
     LinkedList<Booking> getFutureBookingsByUser(@Param("userId") int userId, @Param("localDateTime") LocalDateTime localDateTime);
 
-    @Query(value = "SELECT * FROM booking where id_restaurant=?1 AND local_date_time > ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM booking where id_restaurant=?1 AND local_date_time > ?2 ORDER BY local_date_time", nativeQuery = true)
     LinkedList<Booking> getFutureBookingsByRestaurant(@Param("restId") int restId, @Param("ldt") LocalDateTime ldt);
 
-    @Query(value = "SELECT * FROM booking where id_user=?1 AND local_date_time < ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM booking where id_user=?1 AND local_date_time < ?2 ORDER BY local_date_time", nativeQuery = true)
     LinkedList<Booking> getPastBookingsByUser(@Param("userId") int userId, @Param("ldt") LocalDateTime ldt);
 }
